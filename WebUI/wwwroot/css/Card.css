@@ -1,0 +1,248 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.car-container {
+    text-align: center;
+    margin: auto;
+    width: 100vw; /* Set the width to match the screen width */
+}
+
+.car-card {
+    width: 290px;
+    display: inline-block;
+    text-align:left;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px;
+    padding: 0px 15px;
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    border: 1px solid #068FFF;
+    color: white;
+    position: relative;
+    cursor: pointer;
+    font-weight: 900;
+    transition-duration: .2s;
+}
+
+
+
+
+    .car-card:before, .car-card:after {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        border-radius: 10px;
+        background-size: 300%;
+        background: #068FFF;
+        z-index: -1;
+        animation: steam 20s linear infinite;
+    }
+
+    .car-card:after {
+        filter: blur(100px);
+    }
+
+
+
+
+
+
+.badge {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: red;
+    color: #fff;
+    padding: 3px 10px;
+}
+
+.car-tumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    margin-top: 20px;
+}
+
+    .car-tumb img {
+        width: 265px;
+        height: 160px;
+    }
+
+.car-details {
+    padding: 20px;
+}
+
+
+.car-catagory {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 18px;
+}
+
+.car-details h4 a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    margin: auto;
+    margin-left: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+.car-details p {
+    font-size: 11.45px;
+    color: #ccc;
+    text-align: center;
+    margin: auto;
+    margin-left: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.car-bottom-details {
+    overflow: hidden;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+    .car-bottom-details div {
+        float: left;
+        width: 50%;
+    }
+
+.car-price {
+    font-size: 25px;
+    color: #fbb72c;
+    text-align: left;
+    margin: auto;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+/*HeartCss*/
+
+
+
+
+
+/*HeartCss*/
+
+
+
+.car-links {
+    text-align: right;
+}
+
+    .car-links a {
+        display: inline-block;
+        margin-left: 5px;
+        color: #e1e1e1;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+        .car-links a:hover {
+            color: #fbb72c;
+        }
+
+
+.border-wrapper {
+    display: inline-block; /* Ensures the wrapper's size fits the content */
+    border-radius: 10px; /* Adjust the border radius as needed */
+    overflow: hidden;
+}
+
+
+/* Additional responsive adjustments */
+@media (max-width: 280px) {
+
+
+    body {
+        position: relative;
+        background: url('../css/carmobilever.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: 'Montserrat';
+    }
+
+    filterclass {
+        width: 100%;
+    }
+
+    .car-details h4 {
+        font-size: 10px;
+    }
+
+    .car-details p {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 281px) and (max-width: 1000px) {
+
+    filterclass {
+        width: 100%;
+    }
+
+    .car-card {
+        width: 290px;
+        display: inline-block;
+        text-align: left;
+        justify-content: center;
+        gap: 10px;
+        margin: 30px;
+        padding: 0px 15px;
+        background-color: transparent;
+        backdrop-filter: blur(5px);
+        border-radius: 10px;
+        border: 1px solid #068FFF;
+        color: white;
+        position: relative;
+        cursor: pointer;
+        font-weight: 900;
+        transition-duration: .2s;
+    }
+
+    body {
+        position: relative;
+        background: url('../css/carmobilever.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: 'Montserrat';
+    }
+
+    .car-details h4 {
+        font-size: 16px;
+    }
+
+    .car-details p {
+        font-size: 12px;
+    }
+}

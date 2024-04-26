@@ -1,0 +1,1325 @@
+﻿@using App.Entities.Models;
+@model CarFilterViewModel
+@{
+    var posts = ViewBag.Posts as List<Post>;
+    var favorites = ViewBag.Favorites as List<Favorite>;
+    var filter = ViewBag.Filter as CarFilter;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/FavoriteC.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Pagination.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/adding.css" asp-append-version="true" />
+
+    <style>
+        .active {
+            background-color: #068FFF;
+        }
+
+        .empty_state i {
+            margin: auto;
+            margin-bottom: 0px;
+            font-size: 90px;
+            color: #ccc;
+        }
+
+        .empty_state h3 {
+            margin: 8px 0px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .empty_state p {
+            font-size: 14px;
+            margin: 0px;
+            color: #999;
+            text-align: center;
+        }
+
+        .empty_state button {
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 8px;
+            margin: 20px auto auto auto;
+            width: 50%;
+            max-width: 200px;
+            background: #348AC7;
+            color: white;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+
+
+
+<section style="text-align:center;margin:auto;margin-top:20px;">
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        
+
+        <br />
+        <br />
+
+
+    </div>
+
+    <hr style="border: 2px solid white;" />
+    <br />
+    <br />
+    <br />
+    <section class="container">
+        <div class="add-container">
+            <form class="form-container" id="carFilterForm" method="post" action="@Url.Action("Cars", "Car")">
+                <section>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">Brand</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="Mains.Vendor" id="brandDropdown" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                @*@foreach (var item in filter.Main)
+                                {
+                                <option value="@item.Vendor">@item.Vendor</option>
+                                }*@
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">Model</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="Mains.Model" id="modelDropdown" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                <option selected>Open This For Selection</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">Ban</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="Mains.CarType" id="type" onchange="MyFunc('type','typeinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                <option selected>Open This For Selection</option>
+                                @foreach (var carType in filter.Main.Select(item => item.CarType).Distinct())
+                                {
+                                    <option value="@carType">@carType</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                </section>
+                <section>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">Traction</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="TractionTypes" id="brands" onchange="MyFunc('brands','brandinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                <option selected>Open This For Selection</option>
+                                @foreach (var TractionType in filter.TractionType.Distinct())
+                                {
+                                    <option value="@TractionType">@TractionType</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">Gear</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="Transmissions" id="gears" onchange="MyFunc('models','modelinput') " style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                <option selected>Open This For Selection</option>
+                                @foreach (var transmission in filter.Transmission.Distinct())
+                                {
+                                    <option value="@transmission">@transmission</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="labelcss" style="text-align:center;margin:auto;">FuelType</label>
+                        <br />
+                        <div class="sec-center">
+                            <select asp-for="Engines.FuelType" id="fueltypes" onchange="MyFunc('brands','brandinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                <option selected>Open This For Selection</option>
+                                @foreach (var FuelType in filter.Engine.Select(item => item.FuelType).Distinct())
+                                {
+                                    <option value="@FuelType">@FuelType</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+                </section>
+                <div id="otherFilter" style="display:none;">
+
+                    <section class="sectionFor">
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Color</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="Mains.Color" id="type" onchange="MyFunc('type','typeinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var color in filter.Main.Select(item => item.Color).Distinct())
+                                    {
+                                        <option value="@color">@color</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Year</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="Mains.Year" id="models" onchange="MyFunc('models','modelinput') " style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var year in filter.Main.Select(item => item.Year).Distinct())
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Engine</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="Engines.EngineCapacity" id="fueltypes" onchange="MyFunc('brands','brandinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var EngineCapacity in filter.Engine.Select(item => item.EngineCapacity).Distinct())
+                                    {
+                                        <option value="@EngineCapacity">@EngineCapacity</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </section>
+
+                    <section class="sectionFor">
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">From</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="MarketPlaces" id="tractions" onchange="MyFunc('type','typeinput')" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var MarketPlace in filter.MarketPlace.Distinct())
+                                    {
+                                        <option value="@MarketPlace">@MarketPlace</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Owner</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="OwnerCounts" id="gears" onchange="MyFunc('models','modelinput') " style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var OwnerCount in filter.OwnerCount.Distinct())
+                                    {
+                                        <option value="@OwnerCount">@OwnerCount</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">City</label>
+                            <br />
+                            <div class="sec-center">
+                                <select asp-for="Cities" id="gears" onchange="MyFunc('models','modelinput') " style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                    <option selected>Open This For Selection</option>
+                                    @foreach (var City in filter.City.Distinct())
+                                    {
+                                        <option value="@City">@City</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <section class="sectionFor">
+
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">KiloMeter</label>
+                            <br />
+                            <div class="sec-center">
+                                <input asp-for="MinKilometer" style="display:inline-block;text-align:center;margin:auto;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="min" />
+                                <input asp-for="MaxKilometer" style="display:inline-block;text-align:center;margin:auto;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="max" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">HorsePower</label>
+                            <br />
+                            <div>
+                                <input asp-for="MinHorsePower" style="display:inline-block;text-align:center;margin:auto;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="min" />
+                                <input asp-for="MaxHorsePower" style="display:inline-block;text-align:center;margin:auto;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="max" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Price (AZN)</label>
+                            <br />
+                            <div>
+                                <input asp-for="MinCarPrice" style="display:inline-block;text-align:center;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="min" />
+                                <input asp-for="MaxCarPrice" style="display:inline-block;text-align:center;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;width:6rem;" type="number" placeholder="max" />
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div></div>
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Status</label>
+                            <br />
+                            <div>
+                                <div class="sec-center" style="z-index:2;margin-top:20px;display:flex;">
+                                    <label style="margin-left:-10px;" class="container2">
+                                        <input asp-for="Statuses.IsHit" style="display:inline-block;" hidden type="checkbox">
+                                        <svg viewBox="0 0 64 64" style="display:inline-block;" height="1.3em" width="1.3em">
+                                            <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+                                        </svg>
+                                        <label style="display:inline-block;font-size:13px;margin-left:10px;margin-right:20px;margin-top:-20px;" class="labelcss">Crash</label>
+                                    </label>
+                                    <label style="margin-left:-10px;" class="container2">
+                                        <input asp-for="Statuses.IsPaint" hidden type="checkbox">
+                                        <svg viewBox="0 0 64 64" style="display:inline-block;" height="1.3em" width="1.3em">
+                                            <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+                                        </svg>
+                                        <label style="display:inline-block;font-size:13px;margin-left:10px;margin-top:-20px;" class="labelcss">Color</label>
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <label class="labelcss" style="text-align:center;margin:auto;">Alternative</label>
+                            <br />
+                            <div>
+                                <div class="sec-center" style="z-index:2;margin-top:20px;display:flex;">
+                                    <label style="margin-left:-10px;" class="container2">
+                                        <input asp-for="Finances.IsBarter" style="display:inline-block;" hidden type="checkbox">
+                                        <svg viewBox="0 0 64 64" style="display:inline-block;" height="1.3em" width="1.3em">
+                                            <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+                                        </svg>
+                                        <label style="display:inline-block;font-size:13px;margin-left:10px;margin-right:20px;margin-top:-20px;" class="labelcss">Barter</label>
+                                    </label>
+                                    <label style="margin-left:-10px;" class="container2">
+                                        <input asp-for="Finances.IsCredit" hidden type="checkbox">
+                                        <svg viewBox="0 0 64 64" style="display:inline-block;" height="1.3em" width="1.3em">
+                                            <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+                                        </svg>
+                                        <label style="display:inline-block;font-size:13px;margin-left:10px;margin-top:-20px;" class="labelcss">Credit</label>
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div></div>
+
+                    </section>
+                    <br />
+                </div>
+                <br id="elementForDelete1" />
+                <hr id="elementForDelete2" />
+                <br id="elementForDelete3" />
+                <section class="LastOne">
+                    <div>
+                        <input onclick="clearForm()" type="button" id="clearButton" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;background-color: #9191911f;color:white;width:4rem;" value="Clear" />
+                    </div>
+                    <div>
+                        <input style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;background-color: #9191911f;color:white;width:6rem;" value="Search" class="button" type="submit" />
+                    </div>
+                    <div>
+                        <input onclick="showMore()" type="button" id="showMoreBtn" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;background-color: #9191911f;color:white;width:7rem;" value="Show More" class="button" />
+                    </div>
+                </section>
+
+            </form>
+        </div>
+    </section>
+
+
+
+    <br />
+    <br />
+    <br />
+    <div style="  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;">
+        <br />
+        <div style="  font-size: 20px;
+  background: #1E3050;
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            <select id="sortSelect" onchange="SortFunc()" style="font-size:20px;background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                <option style="font-size:20px;" selected>Filter By..</option>
+                <option value="date" style="font-size:18px;">By Date</option>
+                <option value="priceLTH" style="font-size:18px;">By Price (Lower To Higher)</option>
+                <option value="priceHTL" style="font-size:18px;">By Price (Higher To Lower)</option>
+
+            </select>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr style="border: 2px solid white;" />
+    <br />
+    <h1 id="vipH1" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size:40px;margin-left:10px;">Vip Posts</h1>
+
+    <div class="vipContainer">
+    </div>
+
+    <div id="vipPagi">
+        <div class="pagination">
+            <button style="margin-right:20px;background-color:transparent;" id="prevBtn2" disabled>
+                <img style="width:25px;height:25px;" src="/css/leftarrow.png" />
+            </button>
+            <div id="pageNumbers2" class="page-numbers">
+                <!-- Compact page number representation will be added dynamically here -->
+            </div>
+            <button style="margin-left:20px;background-color:transparent;" id="nextBtn2">
+                <img style="width:25px;height:25px;" src="/css/rightarrow.png" />
+            </button>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <hr style="border: 2px solid white;" />
+
+    <br />
+    <div class="carcontainer">
+    </div>
+
+
+
+
+    <br />
+    <div>
+        <div id="PaginationForCar" class="pagination">
+            <button style="margin-right:20px;background-color:transparent;" id="prevBtn" disabled>
+                <img style="width:25px;height:25px;" src="/css/leftarrow.png" />
+            </button>
+            <div id="pageNumbers" class="page-numbers">
+                <!-- Compact page number representation will be added dynamically here -->
+            </div>
+            <button style="margin-left:20px;background-color:transparent;" id="nextBtn">
+                <img style="width:25px;height:25px;" src="/css/rightarrow.png" />
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/Favorite.js"></script>
+
+
+<script>
+
+    function LoadCarsForMain(Vips, Posts, Favorites) {
+        let content = "";
+        let imgUrl = "../css/whte.png";
+        let p = Vips;
+        let pos = Posts;
+        let favorites = Favorites
+        console.log(favorites);
+        console.log(p);
+        if (p.length == 0) {
+            vipContainer.style.display = "none";
+            vipPagi.style.display = "none";
+            vipH1.style.display = "none";
+            vipHr.style.display = "none";
+        }
+        else {
+            for (let i = 0; i < p.length; i++) {
+                imgUrl = "../css/whte.png";
+                if (!p[i].IsDeleted) {
+                    if (favorites != null) {
+                        for (let k = 0; k < favorites.length; k++) {
+                            if (p[i].id == favorites[k].postId) {
+                                imgUrl = "../css/red.png";
+                            }
+                        }
+                    }
+                    var engine = p[i].car.engine.engineCapacity / 1000;
+                    var borderColor = "";
+                    var creditImage = "../css/Empty.png";
+                    var barterImage = "../css/Empty.png";
+                    var vipImage = "../css/vipimg.png";
+                    if (p[i].car.finance.isBarter == true && p[i].car.finance.isCredit == false) {
+                        barterImage = "../css/exchange.png";
+                        creditImage = "../css/Empty.png";
+                    } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == false) {
+                        creditImage = "../css/percentage.png";
+                        barterImage = "../css/percentage.png";
+                        creditImage = "../css/Empty.png";
+                    } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == true) {
+                        creditImage = "../css/percentage.png";
+                        barterImage = "../css/exchange.png";
+                    } else {
+                        creditImage = "../css/Empty.png";
+
+                    }
+                    content += `
+                                            <div style="border: 5px solid #900C3F;" class="car-card">
+                                                <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                                    <div class="car-tumb" style="position: relative;">
+                                                        <!-- Icon Container -->
+                                                        <div style="position: absolute; top: 5px; right: 5px;">
+                                                            <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                        </div>
+                                                        <div style="position: absolute; top: 5px; right: 33px;">
+                                                                <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                        </div>
+                                                            <div style="position: absolute; bottom: 5px; right: 5px;">
+                                                                        <img src="${vipImage}" alt="Your Icon" style="width: 25px; height: 25px;">
+                                                            </div>
+                                                        <img src="${p[i].car.images[0].link}" alt="">
+                                                    </div>
+                                                    <div class="car-details">
+                                                        <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                                        <p>${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                                        <p>${p[i].car.city}, ${p[i].date}</p>
+                                                        <hr />
+                                                        <div class="car-price">${p[i].car.finance.price} AZN</div>
+                                                    </div>
+                                                </a>
+                                                <div>
+                                                    <div>
+                                                        <img onclick="Favorite(this)" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+
+
+                }
+
+            }
+        }
+
+
+        // Update the "carcontainer" div with the content
+        vipContainer.innerHTML = content;
+        totalPages2 = response.totalPages2; // Update totalPages based on the response
+        updatePageNumbers2();               // Update page numbers after loading content
+    }
+
+
+
+
+    function createCarCard(post, isVip, isFavorite) {
+        let car = post.car;
+        let imgUrl = "../css/whte.png";
+        if (isFavorite) {
+            imgUrl = "../css/red.png";
+        }
+        var vipImage = "";
+        if (isVip) {
+            var vipImage = "../css/vipimg.png";
+        }
+
+        let engine = car.engine.engineCapacity / 1000;
+        let creditImage, barterImage;
+        if (car.finance.isCredit && car.finance.isBarter) {
+            creditImage = barterImage = "../css/percentage.png";
+        } else if (car.finance.isCredit) {
+            creditImage = "../css/percentage.png";
+            barterImage = "../css/Empty.png";
+        } else if (car.finance.isBarter) {
+            creditImage = "../css/Empty.png";
+            barterImage = "../css/exchange.png";
+        } else {
+            creditImage = barterImage = "../css/Empty.png";
+        }
+
+        let cardContent = `
+                            <div style="border: 5px solid ${isVip ? '#900C3F' : '#1E3050'};" class="car-card">
+                                <a href="/Car/SelectedCar?carId=${car.id}" style="text-decoration: none;color:inherit;">
+                                    <div class="car-tumb" style="position: relative;">
+                                        <!-- Icon Container -->
+                                        <div style="position: absolute; top: 5px; right: 5px;">
+                                            <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                        </div>
+                                        <div style="position: absolute; top: 5px; right: 33px;">
+                                            <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                        </div>
+                                        <div style="position: absolute; bottom: 5px; right: 5px;">
+                                            <img src="${imgUrl}" alt="Your Icon" style="width: 25px; height: 25px;">
+                                        </div>
+                                        <img src="${car.images[0].link}" alt="">
+                                    </div>
+                                    <div class="car-details">
+                                        <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${car.main.vendor} ${car.main.model}</h4>
+                                        <p>${car.main.year}, ${engine}, ${car.main.kilometer} km</p>
+                                        <p>${car.city}, ${post.date}</p>
+                                        <hr />
+                                        <div class="car-price">${car.finance.price} AZN</div>
+                                    </div>
+                                </a>
+                                <div>
+                                    <div>
+                                        <img onclick="Favorite(this)" class="favorite-button favorite-icon" data-postid="${post.id}" src="${imgUrl}" />
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+        return cardContent;
+    }
+
+    function ShowCars(response, isVips) {
+        let content = "";
+
+        let favorites = response.favorites;
+        let posts = response.posts;
+        let favoritesArr = []
+        if (favorites != null) {
+            for (let k = 0; k < favorites.length; k++) {
+                if (p[i].id == favorites[k].postId) {
+                    favoritesArr.push(p[i].id)
+                }
+            }
+        }
+
+        if (!isVips) {
+            let p = response.posts;
+
+            if (p.length === 0) {
+                PaginationForCar.style.display = "none";
+                content = `
+                                    <div style="display: flex; justify-content: center; align-items: center; height: 50vh;">
+                                        <div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+                                            <img style="width: 100px; height: 100px;" src="../css/filter.png" />
+                                            <h3 style="margin: 10px 0;">
+                                                <b style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+                                                    We don't have <b style="color:green;">Post(s)</b> According To Your Filter
+                                                </b>
+                                            </h3>
+                                            <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+                                                There have been no posts in this section yet
+                                            </p>
+                                        </div>
+                                    </div>`;
+            } else {
+                let isFavorite = false;
+                for (let i = 0; i < p.length; i++) {
+                    if (!p[i].IsDeleted) {
+                        isFavorite = favoritesArr.includes(p[i]);
+                        content += createCarCard(p[i], false, isFavorite);
+                    }
+                }
+            }
+        } else {
+            let p = response.vips;
+            if (p.length === 0) {
+                vipContainer.style.display = "none";
+                vipPagi.style.display = "none";
+                vipH1.style.display = "none";
+                vipHr.style.display = "none";
+            } else {
+                let isFavorite = false;
+                for (let i = 0; i < p.length; i++) {
+                    if (!p[i].IsDeleted) {
+                        isFavorite = favoritesArr.includes(p[i]);
+                        content += createCarCard(p[i], true, isFavorite);
+                    }
+                }
+            }
+        }
+
+        // Update the "carcontainer" div with the content
+        if (!isVips) {
+
+            carContainer.innerHTML = content;
+        }
+        else {
+            vipContainer.innerHTML = content;
+
+        }
+    }
+    function SortFunc() {
+
+        // priceLTH - price lower to higher
+        // priceHTL - price higher to lower
+        var e = document.getElementById("sortSelect");
+        console.log(e);
+        var value = e.value;
+        console.log(value);
+        if (value != null && value != "") {
+
+            $.ajax({
+                url: '@Url.Action("Sort", "Car")',
+                type: 'POST',
+                data: { data: value },
+                success: function (response) {
+                    //
+                    //Response Is Looking like this
+                    //
+
+                    //currentPage:0
+                    //favorites:[]
+                    //posts:(9)[{… }, {… }, {… }, {… }, {… }, {… }, {… }, {… }, {… }]
+                    //selectedPage:0
+                    //totalPages:7
+                    //totalPages2:3
+                    //vips:(6)[{… }, {… }, {… }, {… }, {… }, {… }]
+                    //[[Prototype]]:Object
+
+                    console.log("Response From Sort: ")
+                    console.log(response);
+                    ShowCars(response, false);
+                    ShowCars(response, true);
+
+                    //loadCars(response.vips,response.posts,response.favorites)
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+
+
+    function showMore() {
+        var otherFilter = document.getElementById("otherFilter");
+        var showMoreBtn = document.getElementById("showMoreBtn");
+        console.log(showMoreBtn.value);
+        if (showMoreBtn.value == "Show Less") {
+            showMoreBtn.value = "Show More";
+            otherFilter.style.display = "none";
+            console.log(showMoreBtn.value);
+
+        }
+        else {
+            otherFilter.style.display = "block";
+            showMoreBtn.value = "Show Less";
+            console.log(showMoreBtn.value);
+
+        }
+    }
+
+
+
+    function clearForm() {
+        // Clear select elements
+        var selects = document.querySelectorAll('select');
+        for (var i = 0; i < selects.length; i++) {
+            selects[i].selectedIndex = 0;
+        }
+
+        // Clear text inputs
+        var inputs = document.querySelectorAll('input[type="number"]');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
+
+        // Clear checkboxes
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+    }
+
+    const vipPagi = document.getElementById('vipPagi');
+    const vipH1 = document.getElementById('vipH1');
+    const vipHr = document.getElementById('vipHr');
+    const PaginationForCar = document.getElementById('PaginationForCar');
+    const clearButton = document.getElementById("clearButton");
+    // Add an event listener to the button
+
+
+
+    clearButton.addEventListener("click", () => {
+        modelDropdown.disabled = true;
+        modelDropdown.style.opacity = 0.5;
+    });
+
+
+    const prevBtn2 = document.getElementById('prevBtn2');
+    const nextBtn2 = document.getElementById('nextBtn2');
+    const pageNumbers2 = document.getElementById('pageNumbers2');
+    const vipContainer = document.querySelector('.vipContainer');
+
+    let currentPage2 = 1;
+    let totalPages2 = 10; // Change this to the total number of pages
+
+
+
+    function updatePageNumbers2() {
+        console.log("updatePageNumbers2")
+
+        $.ajax({
+            url: '@Url.Action("Pagination", "Car")',
+            type: 'POST',
+            data: { selectedPage: currentPage2 },
+            success: function (response) {
+                pageNumbers2.innerHTML = '';
+                console.log("Pagination: ")
+                console.log("")
+                let pagination = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Pagination));
+                console.log(pagination)
+                if (pagination != null) {
+                    totalPages2 = response.totalPages2; // Change this to the total number of pages
+                }
+                const pagesToShow = 4; // Number of page numbers to show at once
+                const halfPages = Math.floor(pagesToShow / 2);
+
+                // Calculate startPage, ensuring it doesn't go below 1
+                // Calculate startPage, ensuring it doesn't go below 1
+                let startPage = Math.max(currentPage2 - halfPages, 1);
+
+                // Calculate endPage, ensuring it doesn't exceed totalPages
+                let endPage = Math.min(startPage + pagesToShow - 1, totalPages2);
+
+                // Adjust startPage if endPage is at totalPages2
+                if (endPage === totalPages2) {
+                    startPage = Math.max(endPage - pagesToShow + 1, 1);
+                }
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageNumber = document.createElement('button');
+                    pageNumber.textContent = i;
+                    pageNumber.classList.add('page-number');
+                    if (i === currentPage2) {
+                        pageNumber.classList.add('active');
+                    }
+
+                    pageNumber.addEventListener('click', () => {
+                        loadCarsForPage2(i);
+
+                    });
+                    pageNumbers2.appendChild(pageNumber);
+                }
+
+                prevBtn2.disabled = currentPage2 === 1;
+                nextBtn2.disabled = currentPage2 === totalPages2;
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX error
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+
+    }
+
+
+
+    function loadCarsForPage2(pageNumber) {
+        currentPage2 = pageNumber;
+        console.log("loadCarsForPage2")
+
+        $.ajax({
+            url: '@Url.Action("Pagination", "Car")',
+            type: 'POST',
+            data: { selectedPage: currentPage2, currentPage: 1 },
+
+            success: function (response) {
+                let content = "";
+                let imgUrl = "../css/whte.png";
+                let p = response.vips;
+                let pos = response.posts;
+                let favorites = response.favorites
+                if (p.length == 0) {
+                    vipContainer.style.display = "none";
+                    vipPagi.style.display = "none";
+                    vipH1.style.display = "none";
+                    vipHr.style.display = "none";
+                }
+                else {
+                    for (let i = 0; i < p.length; i++) {
+                        imgUrl = "../css/whte.png";
+                        if (!p[i].IsDeleted) {
+                            if (favorites != null) {
+
+                                for (let k = 0; k < favorites.length; k++) {
+                                    if (p[i].id == favorites[k].postId) {
+                                        imgUrl = "../css/red.png";
+                                    }
+                                }
+                            }
+                            var engine = p[i].car.engine.engineCapacity / 1000;
+                            var borderColor = "";
+                            var creditImage = "../css/Empty.png";
+                            var barterImage = "../css/Empty.png";
+                            var vipImage = "../css/vipimg.png";
+                            if (p[i].car.finance.isBarter == true && p[i].car.finance.isCredit == false) {
+                                barterImage = "../css/exchange.png";
+                                creditImage = "../css/Empty.png";
+                            } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == false) {
+                                creditImage = "../css/percentage.png";
+                                barterImage = "../css/percentage.png";
+                                creditImage = "../css/Empty.png";
+                            } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == true) {
+                                creditImage = "../css/percentage.png";
+                                barterImage = "../css/exchange.png";
+                            } else {
+                                creditImage = "../css/Empty.png";
+
+                            }
+                            content += `
+                                <div style="border: 5px solid #900C3F;" class="car-card">
+                                    <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                        <div class="car-tumb" style="position: relative;">
+                                            <!-- Icon Container -->
+                                            <div style="position: absolute; top: 5px; right: 5px;">
+                                                <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                            </div>
+                                            <div style="position: absolute; top: 5px; right: 33px;">
+                                                    <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                            </div>
+                                                <div style="position: absolute; bottom: 5px; right: 5px;">
+                                                            <img src="${vipImage}" alt="Your Icon" style="width: 25px; height: 25px;">
+                                                </div>
+                                            <img src="${p[i].car.images[0].link}" alt="">
+                                        </div>
+                                        <div class="car-details">
+                                            <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                            <p>${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                            <p>${p[i].car.city}, ${p[i].date}</p>
+                                            <hr />
+                                            <div class="car-price">${p[i].car.finance.price} AZN</div>
+                                        </div>
+                                    </a>
+                                    <div>
+                                        <div>
+                                            <img onclick="Favorite(this)" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+
+                        }
+
+                    }
+                }
+
+
+                // Update the "carcontainer" div with the content
+                vipContainer.innerHTML = content;
+                totalPages2 = response.totalPages2; // Update totalPages based on the response
+                updatePageNumbers2(); // Update page numbers after loading content
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX error
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    }
+
+
+    prevBtn2.addEventListener('click', () => loadCarsForPage2(currentPage2 - 1));
+    nextBtn2.addEventListener('click', () => loadCarsForPage2(currentPage2 + 1));
+
+
+
+    $(document).ready(function () {
+        loadCarsForPage2(1); // Load cars for the first page initially
+
+    });
+
+    updatePageNumbers2();
+
+
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pageNumbers = document.getElementById('pageNumbers');
+    const carContainer = document.querySelector('.carcontainer');
+
+    let currentPage = 1;
+    let totalPages = 10; // Change this to the total number of pages
+
+
+
+    function updatePageNumbers() {
+        console.log("updatePageNumbers")
+
+        $.ajax({
+            url: '@Url.Action("Pagination", "Car")',
+            type: 'POST',
+            data: { selectedPage: currentPage },
+            success: function (response) {
+                pageNumbers.innerHTML = '';
+                let pagination = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Pagination));
+                if (pagination != null) {
+                    totalPages = response.totalPages; // Change this to the total number of pages
+                }
+                const pagesToShow = 4; // Number of page numbers to show at once
+                const halfPages = Math.floor(pagesToShow / 2);
+
+                // Calculate startPage, ensuring it doesn't go below 1
+                let startPage = Math.max(currentPage - halfPages, 1);
+
+                // Calculate endPage, ensuring it doesn't exceed totalPages
+                let endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+                // Adjust startPage if endPage is at totalPages
+                if (endPage === totalPages) {
+                    startPage = Math.max(endPage - pagesToShow + 1, 1);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageNumber = document.createElement('button');
+                    pageNumber.textContent = i;
+                    pageNumber.classList.add('page-number');
+                    if (i === currentPage) {
+                        pageNumber.classList.add('active');
+                    }
+
+                    pageNumber.addEventListener('click', () => {
+                        loadCarsForPage(i);
+
+                    });
+                    pageNumbers.appendChild(pageNumber);
+                }
+
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX error
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+
+    }
+
+
+
+
+    function loadCarsForPage(pageNumber) {
+        currentPage = pageNumber;
+        console.log("loadCarsForPage")
+        $.ajax({
+            url: '@Url.Action("Pagination", "Car")',
+            type: 'POST',
+            data: { selectedPage: currentPage },
+            success: function (response) {
+                console.log("-----------------------------------")
+                console.log(response)
+                let content = "";
+                let imgUrl = "../css/whte.png";
+                let p = response.posts;
+                let favorites = response.favorites
+                if (p.length == 0) {
+                    PaginationForCar.style.display = "none";
+                    content = `<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">
+                                        <div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+                                            <img style="width: 100px; height: 100px;" src="../css/filter.png" />
+                                            <h3 style="margin: 10px 0;"><b style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">We don't have <b style="color:green;">Post(s)</b> According To Your Filter</b></h3>
+                                                <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">There have been no posts in this section yet</p>
+                                        </div>
+                                    </div>`;
+                }
+                else {
+                    for (let i = 0; i < p.length; i++) {
+                        imgUrl = "../css/whte.png";
+                        if (!p[i].IsDeleted) {
+                            p[i].IsDeleted = false;
+                            if (favorites != null) {
+
+                                for (let k = 0; k < favorites.length; k++) {
+                                    if (p[i].id == favorites[k].postId) {
+                                        imgUrl = "../css/red.png";
+                                    }
+                                }
+                            }
+                            var engine = p[i].car.engine.engineCapacity / 1000;
+                            var borderColor = "";
+                            var creditImage = "../css/Empty.png";
+                            var barterImage = "../css/Empty.png";
+                            var vipImage = "../css/vipimg.png";
+
+                            if (p[i].car.finance.isBarter == true && p[i].car.finance.isCredit == false) {
+                                barterImage = "../css/exchange.png";
+                                creditImage = "../css/Empty.png";
+                            } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == false) {
+                                creditImage = "../css/percentage.png";
+                                barterImage = "../css/percentage.png";
+                                creditImage = "../css/Empty.png";
+                            } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == true) {
+                                creditImage = "../css/percentage.png";
+                                barterImage = "../css/exchange.png";
+                            } else {
+                                creditImage = "../css/Empty.png";
+
+                            }
+                            if (p[i].isVip) {
+                                content += `
+                                    <div style="border: 5px solid #1E3050;" class="car-card">
+                                        <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                            <div class="car-tumb" style="position: relative;">
+                                                <!-- Icon Container -->
+                                                <div style="position: absolute; top: 5px; right: 5px;">
+                                                    <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <div style="position: absolute; top: 5px; right: 33px;">
+                                                        <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <div style="position: absolute; bottom: 5px; right: 5px;">
+                                                    <img src="${vipImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <img src="${p[i].car.images[0].link}" alt="">
+                                            </div>
+                                            <div class="car-details">
+                                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                                <p>${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                                <p>${p[i].car.city}, ${p[i].date}</p>
+                                                <hr />
+                                                <div class="car-price">${p[i].car.finance.price} AZN</div>
+                                            </div>
+                                        </a>
+                                        <div>
+                                            <div>
+                            <img onclick="Favorite(this)" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            else {
+                                content += `
+                                    <div style="border: 5px solid #1E3050;" class="car-card">
+                                        <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                            <div class="car-tumb" style="position: relative;">
+                                                <!-- Icon Container -->
+                                                <div style="position: absolute; top: 5px; right: 5px;">
+                                                    <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <div style="position: absolute; top: 5px; right: 33px;">
+                                                        <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <img src="${p[i].car.images[0].link}" alt="">
+                                            </div>
+                                            <div class="car-details">
+                                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                                <p>${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                                <p>${p[i].car.city}, ${p[i].date}</p>
+                                                <hr />
+                                                <div class="car-price">${p[i].car.finance.price} AZN</div>
+                                            </div>
+                                        </a>
+                                        <div>
+                                            <div>
+                            <img onclick="Favorite(this)" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+
+
+                        }
+
+                    }
+                }
+
+
+                // Update the "carcontainer" div with the content
+                carContainer.innerHTML = content;
+                totalPages = response.totalPages; // Update totalPages based on the response
+                updatePageNumbers(); // Update page numbers after loading content
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX error
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    }
+
+
+    prevBtn.addEventListener('click', () => loadCarsForPage(currentPage - 1));
+    nextBtn.addEventListener('click', () => loadCarsForPage(currentPage + 1));
+
+
+
+    $(document).ready(function () {
+        loadCarsForPage(1); // Load cars for the first page initially
+    });
+
+    updatePageNumbers();
+
+    var brandsAndModels = @Html.Raw(ViewBag.BrandModels);
+    const brandDropdown = document.getElementById("brandDropdown");
+    const modelDropdown = document.getElementById("modelDropdown");
+
+    // Function to populate the brand and model dropdowns
+    function populateDropdowns() {
+        // Clear existing options
+        brandDropdown.innerHTML = '<option value="">Open This For Selection</option>';
+        modelDropdown.innerHTML = '<option value="">Open This For Selection</option>';
+
+        // Reset stored model value
+
+        // Populate the brand dropdown
+        for (const brand in brandsAndModels) {
+            const option = document.createElement("option");
+            option.value = brand;
+            option.textContent = brand;
+            brandDropdown.appendChild(option);
+        }
+
+        // Retrieve and set stored brand value
+        setStoredValues();
+
+        // Disable the model dropdown by default
+        modelDropdown.disabled = true;
+        modelDropdown.style.opacity = 0.5;
+
+    }
+
+    // Call the function to populate the dropdowns when the page loads
+    populateDropdowns();
+
+    // Event listener for brand selection
+    brandDropdown.addEventListener("change", () => {
+        // Clear and disable the model dropdown
+        modelDropdown.innerHTML = '<option value="">Open this select menu</option>';
+        modelDropdown.disabled = true;
+
+        const selectedBrand = brandDropdown.value;
+        if (brandDropdown.innerHTML == '<option value="">Open this select menu</option>') {
+            modelDropdown.disabled = true;
+            modelDropdown.style.opacity = 0.5;
+        }
+        if (selectedBrand) {
+            const selectedBrandObject = brandsAndModels[selectedBrand];
+            if (selectedBrandObject) {
+                selectedBrandObject.forEach(model => {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    option.textContent = model;
+                    modelDropdown.appendChild(option);
+                });
+                modelDropdown.disabled = false;
+                modelDropdown.style.opacity = 1;
+            }
+        }
+
+        // Set stored values
+        setStoredValues();
+    });
+
+    // Event listener for model selection
+    modelDropdown.addEventListener("change", () => {
+        const selectedModel = modelDropdown.value;
+        // Set stored values
+        setStoredValues();
+    });
+
+    // Function to set stored values in the dropdowns
+    function setStoredValues() {
+        const storedBrand = sessionStorage.getItem("selectedBrand");
+        const storedModel = sessionStorage.getItem("selectedModel");
+
+        if (storedBrand) {
+            brandDropdown.value = storedBrand;
+            brandDropdown.dispatchEvent(new Event("change")); // Trigger change event to populate models
+        }
+
+        if (storedModel) {
+            modelDropdown.value = storedModel;
+        }
+    }
+
+
+    // Call the function to set stored values when the page loads
+    setStoredValues();
+
+
+
+
+
+    var globalPostId = 0;
+    function Favorite(imgElement) {
+        const postId = imgElement.getAttribute('data-postid');
+        if (imgElement.src.includes('whte.png')) {
+            imgElement.src = 'css/red.png';
+            $.ajax({
+                url: '@Url.Action("Favorite", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    if (response.redirectUrl) {
+                        // Handle the redirection manually
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        // Handle other responses
+                        globalPostId = postId;
+                        imgElement.onclick = function () {
+                            Favorite(this, globalPostId);
+                        };
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert(error)
+                }
+            });
+
+
+        } else {
+            imgElement.src = 'css/whte.png';
+            $.ajax({
+                url: '@Url.Action("FavoriteDelete", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    imgElement.onclick = function () {
+                        Favorite(this, globalPostId);
+                    };
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+        const favoriteIcons = document.querySelectorAll(`.favorite-icon[data-postid="${postId}"]`);
+        favoriteIcons.forEach(function (icon) {
+            icon.src = imgElement.src;
+        });
+
+    }
+
+
+
+
+</script>

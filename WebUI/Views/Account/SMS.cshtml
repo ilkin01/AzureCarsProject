@@ -1,0 +1,96 @@
+﻿
+@model SmsViewModel
+
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - WebUI</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/twofactor.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+</head>
+
+@{
+	Layout = null;
+}
+
+
+<style>
+	body{
+		overflow-x:hidden;
+		overflow-y: hidden;
+	}
+</style>
+
+<body>
+
+
+	<section id="twofactor" class="container">
+		<form class="form" asp-controller="Account" asp-action="SMS" method="post"
+			  role="form">
+			<div class="info">
+				<h1 class="title" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b>SMS Code</b></h1>
+				<p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="description">Don't share this SMS Code with anybody.</p>
+				<br />
+			</div>
+
+			<div class="input-fields">
+				<input id="sms1" asp-for="sms1" placeholder="" type="tel" maxlength="1">
+				<input id="sms2" asp-for="sms2" placeholder="" type="tel" maxlength="1">
+				<input id ="sms3" asp-for="sms3" placeholder="" type="tel" maxlength="1">
+				<input id="sms4" asp-for="sms4" placeholder="" type="tel" maxlength="1">
+			</div>
+			<br />
+			<div class="action-btns">
+				<input value="Submit" type="submit" class="verify" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:20px;" href="#"/>
+			</div>
+
+		</form>
+	</section>
+
+
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+		const smsInputs = [
+			document.getElementById("sms1"),
+			document.getElementById("sms2"),
+			document.getElementById("sms3"),
+			document.getElementById("sms4")
+		];
+
+		// Add event listeners to each input field
+		smsInputs.forEach((input, index) => {
+			input.addEventListener("input", function (e) {
+				// Move focus to the next input field when a character is entered
+				if (e.target.value.length === 1 && index < smsInputs.length - 1) {
+					smsInputs[index + 1].focus();
+				}
+			});
+
+			// Prevent the user from pasting more than one character
+			input.addEventListener("paste", function (e) {
+				const text = e.clipboardData.getData("text");
+				if (text.length > 1) {
+					e.preventDefault();
+					// Only paste the first character
+					e.target.value = text[0];
+					// Move focus to the next input field
+					if (index < smsInputs.length - 1) {
+						smsInputs[index + 1].focus();
+					}
+				}
+			});
+
+			// Add event listener for the "Backspace" key
+			input.addEventListener("keydown", function (e) {
+				if (e.key === "Backspace" && index > 0 && e.target.value.length === 0) {
+					// If backspace is pressed and the current input is empty, move focus to the previous input
+					smsInputs[index - 1].focus();
+				}
+			});
+		});
+	</script>
+
+</body>

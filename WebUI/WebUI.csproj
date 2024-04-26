@@ -1,0 +1,262 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net6.0\appsettings.Development.json" />
+    <Content Include="bin\Debug\net6.0\appsettings.json" />
+    <Content Include="bin\Debug\net6.0\publish\appsettings.Development.json" />
+    <Content Include="bin\Debug\net6.0\publish\appsettings.json" />
+    <Content Include="bin\Debug\net6.0\publish\WebUI.deps.json" />
+    <Content Include="bin\Debug\net6.0\publish\WebUI.runtimeconfig.json" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\aboutvip.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\adding.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\AddToCar.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\alluser.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\backgroundCover.jpeg" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\barter.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\bigheart.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\both.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\Card.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\combobox.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\correct.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\credit.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\crown.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\curcars.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\delete.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\Empty.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\exchange.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\expiredimg.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\FavoriteC.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\favoritesitem.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\filter.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\first.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\floppy-disk.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\greencrown.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\ImageUploader.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\leftarrow.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\login.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\newcss.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\Pagination.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\pen.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\percentage.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\Profile.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\red.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\remove.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\removelist.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\rightarrow.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\site.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\twofactor.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\vipimg.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\welcome.jpg" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\whte.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\css\x-button.png" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\favicon.ico" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery\LICENSE.txt" />
+    <Content Include="bin\Debug\net6.0\publish\wwwroot\WebUI.styles.css" />
+    <Content Include="bin\Debug\net6.0\WebUI.deps.json" />
+    <Content Include="bin\Debug\net6.0\WebUI.runtimeconfig.json" />
+    <Content Include="bin\Debug\net6.0\WebUI.staticwebassets.runtime.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0\App.Business.dll" />
+    <None Include="bin\Debug\net6.0\App.Business.pdb" />
+    <None Include="bin\Debug\net6.0\App.Core.dll" />
+    <None Include="bin\Debug\net6.0\App.Core.pdb" />
+    <None Include="bin\Debug\net6.0\App.DataAccess.dll" />
+    <None Include="bin\Debug\net6.0\App.DataAccess.pdb" />
+    <None Include="bin\Debug\net6.0\App.Entities.dll" />
+    <None Include="bin\Debug\net6.0\App.Entities.pdb" />
+    <None Include="bin\Debug\net6.0\CloudinaryDotNet.dll" />
+    <None Include="bin\Debug\net6.0\EntityFramework.dll" />
+    <None Include="bin\Debug\net6.0\EntityFramework.SqlServer.dll" />
+    <None Include="bin\Debug\net6.0\Humanizer.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.Identity.Client.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll" />
+    <None Include="bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll" />
+    <None Include="bin\Debug\net6.0\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug\net6.0\publish\App.Business.dll" />
+    <None Include="bin\Debug\net6.0\publish\App.Business.pdb" />
+    <None Include="bin\Debug\net6.0\publish\App.Core.dll" />
+    <None Include="bin\Debug\net6.0\publish\App.Core.pdb" />
+    <None Include="bin\Debug\net6.0\publish\App.DataAccess.dll" />
+    <None Include="bin\Debug\net6.0\publish\App.DataAccess.pdb" />
+    <None Include="bin\Debug\net6.0\publish\App.Entities.dll" />
+    <None Include="bin\Debug\net6.0\publish\App.Entities.pdb" />
+    <None Include="bin\Debug\net6.0\publish\CloudinaryDotNet.dll" />
+    <None Include="bin\Debug\net6.0\publish\EntityFramework.dll" />
+    <None Include="bin\Debug\net6.0\publish\EntityFramework.SqlServer.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.EntityFrameworkCore.Abstractions.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.EntityFrameworkCore.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.EntityFrameworkCore.Relational.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.EntityFrameworkCore.SqlServer.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.Identity.Client.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.Abstractions.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.JsonWebTokens.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.Logging.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.Protocols.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.IdentityModel.Tokens.dll" />
+    <None Include="bin\Debug\net6.0\publish\Microsoft.Win32.SystemEvents.dll" />
+    <None Include="bin\Debug\net6.0\publish\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-arm64\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-x64\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win-x86\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll" />
+    <None Include="bin\Debug\net6.0\publish\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.CodeDom.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Configuration.ConfigurationManager.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.IdentityModel.Tokens.Jwt.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Runtime.Caching.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Security.Cryptography.ProtectedData.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Security.Permissions.dll" />
+    <None Include="bin\Debug\net6.0\publish\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net6.0\publish\Twilio.dll" />
+    <None Include="bin\Debug\net6.0\publish\web.config" />
+    <None Include="bin\Debug\net6.0\publish\WebUI.dll" />
+    <None Include="bin\Debug\net6.0\publish\WebUI.exe" />
+    <None Include="bin\Debug\net6.0\publish\WebUI.pdb" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\css\Slider.scss" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\js\Favorite.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\js\ForTest.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\js\newjs.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\js\site.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="bin\Debug\net6.0\publish\wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-x64\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win-x86\native\sni.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll" />
+    <None Include="bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll" />
+    <None Include="bin\Debug\net6.0\System.CodeDom.dll" />
+    <None Include="bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll" />
+    <None Include="bin\Debug\net6.0\System.Data.SqlClient.dll" />
+    <None Include="bin\Debug\net6.0\System.Drawing.Common.dll" />
+    <None Include="bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll" />
+    <None Include="bin\Debug\net6.0\System.Runtime.Caching.dll" />
+    <None Include="bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll" />
+    <None Include="bin\Debug\net6.0\System.Security.Permissions.dll" />
+    <None Include="bin\Debug\net6.0\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net6.0\Twilio.dll" />
+    <None Include="bin\Debug\net6.0\WebUI.dll" />
+    <None Include="bin\Debug\net6.0\WebUI.exe" />
+    <None Include="bin\Debug\net6.0\WebUI.pdb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App.Business\App.Business.csproj" />
+    <ProjectReference Include="..\App.Entities\App.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

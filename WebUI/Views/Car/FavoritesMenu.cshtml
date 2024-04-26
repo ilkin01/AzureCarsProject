@@ -1,0 +1,540 @@
+﻿@using App.Entities.Models;
+@{
+    var favorites = ViewBag.Favorites as List<Favorite>;
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/FavoriteC.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/js/Favorite.js" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Profile.css" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/FavoriteC.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/js/Favorite.js" asp-append-version="true" />*@
+</head>
+
+
+
+<style>
+    .car-tumb {
+        position: relative;
+        display: inline-block;
+    }
+
+    .center-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1; /* Adjust the z-index to control layering */
+    }
+    /* Mini alert container */
+    .mini-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #C70039; /* Blue background color */
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        z-index: 9999;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
+
+
+    /* Close (x) icon */
+    .close-icon {
+        cursor: pointer;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+        margin-left: 10px; /* Add space between content and close button */
+    }
+
+    /* Alert content */
+    .alert-content {
+        margin-bottom: 10px; /* Add margin for space */
+    }
+
+    /* Show animation */
+    .show {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Fade in animation */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .empty_state i {
+        margin: auto;
+        margin-bottom: 0px;
+        font-size: 90px;
+        color: #ccc;
+    }
+
+    .empty_state h3 {
+        margin: 8px 0px;
+        text-align: center;
+        font-weight: normal;
+    }
+
+    .empty_state p {
+        font-size: 14px;
+        margin: 0px;
+        color: #999;
+        text-align: center;
+    }
+
+    .empty_state button {
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        padding: 8px 8px;
+        margin: 20px auto auto auto;
+        width: 50%;
+        max-width: 200px;
+        background: #348AC7;
+        color: white;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+</style>
+
+<div class="carcontainer" style="text-align:center;margin:auto;">
+
+    <article class="container">
+        <br />
+        <br />
+        <br />
+
+
+        @if (favorites.Count == 0)
+        {
+            <div style="display: flex; justify-content: center; align-items: center; height: 50vh;">
+                <div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+                    <img style="width: 100px; height: 100px;" src="../css/bigheart.png" />
+                    <h3 style="margin: 10px 0;">You don't have <b style="color:red;">Favorites</b> Yet</h3>
+                    <p>There have been no favorites in this section yet</p>
+                </div>
+            </div>
+        }
+
+
+
+        <br />
+        <br />
+
+
+    </article>
+
+
+
+    <div class="mini-alert" id="miniAlert">
+        <span class="close-icon" onclick="hideNotification('miniAlert')">&times;</span>
+        <div class="alert-content">
+            Your Selected Car Was Removed From Favorites List
+        </div>
+    </div>
+
+
+    <div style="background-color:#7AA874;" class="mini-alert" id="AddToFavorites">
+        <span class="close-icon" onclick="hideNotification('AddToFavorites')">&times;</span>
+        <div class="alert-content">
+            Your Selected Car Was Added From Favorites List
+        </div>
+    </div>
+
+    @*CARD UI (For un icine salinacaq hisse) *@
+    @if (favorites != null && favorites.Count != 0)
+    {
+
+        @foreach (var favorite in favorites)
+        {
+
+            var post = favorite.Post;
+            var engine = post.Car.Engine.EngineCapacity / 1000;
+            string link = null;
+            if (post.Car.Images.Count > 0)
+            {
+                link = post.Car.Images[0].Link;
+            }
+            var price = (int)post.Car.Finance.Price;
+            var creditImage = "../css/Empty.png";
+            var barterImage = "../css/Empty.png";
+            var vipImage = "../css/vipimg.png";
+            if (post.Car.Finance.IsBarter == true && post.Car.Finance.IsCredit == false)
+            {
+                barterImage = "../css/exchange.png";
+                creditImage = "../css/Empty.png";
+            }
+            else if (post.Car.Finance.IsCredit == true && post.Car.Finance.IsBarter == false)
+            {
+                creditImage = "../css/percentage.png";
+                barterImage = "../css/percentage.png";
+                creditImage = "../css/Empty.png";
+            }
+            else if (post.Car.Finance.IsCredit == true && post.Car.Finance.IsBarter == true)
+            {
+                creditImage = "../css/percentage.png";
+                barterImage = "../css/exchange.png";
+            }
+            else
+            {
+                creditImage = "../css/Empty.png";
+
+            }
+
+
+            if (post.IsDeleted == false)
+            {
+
+                if (post.IsVip == true)
+                {
+                    <div style="border: 5px solid #900C3F;" class="car-card">
+                        <a asp-controller="Car" asp-action="SelectedCar" asp-route-carId="@post.Car.Id" style="text-decoration: none;text-align:center;display:inline-block;color:inherit;">
+                            <div class="car-tumb" style="position: relative;">
+                                <!-- Icon Container -->
+                                <div style="position: absolute; top: 5px; right: 5px;">
+                                    <img src="@barterImage" alt="Your Icon" style="width: 23px; height: 23px;">
+                                </div>
+                                <div style="position: absolute; top: 5px; right: 33px;">
+                                    <img src="@creditImage" alt="Your Icon" style="width: 23px; height: 23px;">
+                                </div>
+                                <div style="position: absolute; bottom: 5px; right: 5px;">
+                                    <img src="@vipImage" alt="Your Icon" style="width: 23px; height: 23px;">
+                                </div>
+                                <img src="@link" alt="">
+                            </div>
+                            <div class="car-details">
+                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">@post.Car.Main.Vendor @post.Car.Main.Model</h4>
+                                <p>@post.Car.Main.Year, @engine, @post.Car.Main.Kilometer km</p>
+                                <p>@post.Car.City, @post.Date.ToLongDateString()</p>
+                                <hr />
+                                <div style="text-align:left;margin:auto;" class="car-price">@price AZN</div>
+                            </div>
+                        </a>
+
+                        <div>
+                            <div>
+                                <img onclick="RemoveFromFavorites2(this,@post.Id)" class="favorite-button" src="../css/remove.png" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div style="border: 5px solid #1E3050;" class="car-card">
+                        <a asp-controller="Car" asp-action="SelectedCar" asp-route-carId="@post.Car.Id" style="text-decoration: none;text-align:center;display:inline-block;color:inherit;">
+                            <div class="car-tumb" style="position: relative;">
+                                <!-- Icon Container -->
+                                <div style="position: absolute; top: 5px; right: 5px;">
+                                    <img src="@barterImage" alt="Your Icon" style="width: 23px; height: 23px;">
+                                </div>
+                                <div style="position: absolute; top: 5px; right: 33px;">
+                                    <img src="@creditImage" alt="Your Icon" style="width: 23px; height: 23px;">
+                                </div>
+                                <img src="@link" alt="">
+                            </div>
+                            <div class="car-details">
+                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">@post.Car.Main.Vendor @post.Car.Main.Model</h4>
+                                <p>@post.Car.Main.Year, @engine, @post.Car.Main.Kilometer km</p>
+                                <p>@post.Car.City, @post.Date.ToLongDateString()</p>
+                                <hr />
+                                <div style="text-align:left;margin:auto;" class="car-price">@price AZN</div>
+                            </div>
+                        </a>
+
+                        <div>
+                            <div>
+                                <img onclick="RemoveFromFavorites2(this,@post.Id)" class="favorite-button" src="../css/remove.png" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            }
+            else
+            {
+
+                if (post.IsVip == true)
+                {
+                    <div style="border: 5px solid #900C3F;" class="car-card">
+                        <a style="text-decoration: none;text-align:center;display:inline-block;color:inherit;">
+                            <div class="car-tumb">
+                                <img src="@link" alt="">
+                                <img style="width:220px;height:150px;margin-left:10px;" class="center-image" src="../css/expiredimg.png" alt="">
+                            </div>
+                            <div class="car-details">
+                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">@post.Car.Main.Vendor @post.Car.Main.Model</h4>
+                                <p>@post.Car.Main.Year, @engine, @post.Car.Main.Kilometer km</p>
+                                <p>@post.Car.City, @post.Date.ToLongDateString()</p>
+                                <hr />
+                                <div style="text-align:left;margin:auto;" class="car-price">@price AZN</div>
+                            </div>
+                        </a>
+
+                        <div>
+                            <div>
+                                <img id="removedImgFromExpired" onclick="RemoveFromFavorites(this,@post.Id,@post.IsDeleted.ToString().ToLower())" class="favorite-button" src="../css/remove.png" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div style="border: 5px solid #1E3050;" class="car-card">
+                        <a style="text-decoration: none;text-align:center;display:inline-block;color:inherit;">
+                            <div class="car-tumb">
+                                <img src="@link" alt="">
+                                <img style="width:220px;height:150px;margin-left:10px;" class="center-image" src="../css/expiredimg.png" alt="">
+                            </div>
+                            <div class="car-details">
+                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">@post.Car.Main.Vendor @post.Car.Main.Model</h4>
+                                <p>@post.Car.Main.Year, @engine, @post.Car.Main.Kilometer km</p>
+                                <p>@post.Car.City, @post.Date.ToLongDateString()</p>
+                                <hr />
+                                <div style="text-align:left;margin:auto;" class="car-price">@price AZN</div>
+                            </div>
+                        </a>
+
+                        <div>
+                            <div>
+                                <img id="removedImgFromExpired" onclick="RemoveFromFavorites(this,@post.Id,@post.IsDeleted.ToString().ToLower())" class="favorite-button" src="../css/remove.png" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        }
+    }
+    else
+    {
+
+
+
+    }
+    @*CARD UI (For un icine salinacaq hisse) *@
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/Favorite.js"></script>
+<script>
+
+    @*    let obj = []
+
+        function SelectElement(id) {
+        let Selects = document.getElementById(id);
+        Selects.onchange = (ev) => {
+        let selectedOption = Selects.options[Selects.selectedIndex];
+
+        if (selectedOption.selected) {
+        selectedOption.style.backgroundColor = "rgb(255, 165, 0)";
+        obj.push(selectedOption.value);
+        } else {
+        selectedOption.style.backgroundColor = "";
+        obj = obj.filter(function (item) {
+        return item !== selectedOption.value;
+        });
+        }
+
+        console.log(obj);
+        };
+        }*@
+    @*
+        function SelectElement(id) {
+        let Selects = document.getElementById(id);
+        Selects.onchange = (ev) => {
+        let sIndex = Selects.selectedIndex;
+        let selectedOption = Selects.options[sIndex];
+        console.log(selectedOption.selected)
+        if (selectedOption.selected) {
+
+        selectedOption.style.backgroundColor = "rgb(255, 165, 0)";
+        selectedOption.selected = false;
+        obj.push(selectedOption.value);
+        console.log(obj)
+        }
+        else {
+        selectedOption.style.backgroundColor = "";
+        selectedOption.selected = true;
+        obj = obj.filter(function (item) {
+        console.log(item)
+        return item !== selectedOption.id;
+        });
+        console.log(obj)
+        }
+
+        }
+        }*@
+        function closeMiniAlert() {
+            location.reload()
+        }
+    function hideNotification(notificationId) {
+        //document.getElementById("miniAlert").style.display = "block";
+        document.getElementById(notificationId).style.display = "none";
+    }
+    var globalPostID = 0;
+    function RemoveFromFavorites(imgElement, postId, isDeleted) {
+        if (imgElement.src.includes('remove.png')) {
+            $.ajax({
+                url: '@Url.Action("FavoriteDelete", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    globalPostID = postId;
+                    // Handle the successful response from the server
+                    console.log(response);
+                    //Favorite(imgElement, postId);
+                    document.getElementById("miniAlert").style.display = "block";
+                    document.getElementById("AddToFavorites").style.display = "none";
+                    var removedImg = document.getElementById("removedImgFromExpired");
+                    imgElement.src = '../css/whte.png';
+                    removedImg.onclick = null;
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors that occurred during the AJAX request
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+    }
+    function Favorite(imgElement, postId) {
+    @*FavoriteImageChange(imgElement);*@
+
+                                                        if (imgElement.src.includes('remove.png')) {
+            // If the image is currently the white heart, change it to the red heart
+            // If the image is currently the red heart, change it to the white heart
+            imgElement.src = '../css/whte.png';
+
+        }
+        else {
+            imgElement.src = '../css/remove.png';
+            $.ajax({
+                url: '@Url.Action("Favorite", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    // Handle the successful response from the server
+                    console.log(response);
+    @*imgElement.removeEventListener('click',function(){
+                        Favorite(this,1);
+                        });*@
+                        document.getElementById("miniAlert").style.display = "none";
+                    document.getElementById("AddToFavorites").style.display = "block";
+                    imgElement.onclick = function () {
+                        RemoveFromFavorites(this, globalPostID, 'true');
+                    };
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors that occurred during the AJAX request
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+
+    }
+
+
+
+    var globalPostID2 = 0;
+    function RemoveFromFavorites2(imgElement, postId, isDeleted) {
+        if (imgElement.src.includes('remove.png')) {
+            $.ajax({
+                url: '@Url.Action("FavoriteDelete", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    globalPostID2 = postId;
+                    // Handle the successful response from the server
+                    console.log(response);
+                    Favorite2(imgElement, postId);
+                    document.getElementById("miniAlert").style.display = "block";
+                    document.getElementById("AddToFavorites").style.display = "none";
+
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors that occurred during the AJAX request
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+        else {
+            Favorite2(imgElement, postId);
+        }
+    }
+    function Favorite2(imgElement, postId) {
+    @*FavoriteImageChange(imgElement);*@
+
+                                                            if (imgElement.src.includes('remove.png')) {
+            // If the image is currently the white heart, change it to the red heart
+            // If the image is currently the red heart, change it to the white heart
+            imgElement.src = '../css/whte.png';
+
+        }
+        else {
+            imgElement.src = '../css/remove.png';
+            $.ajax({
+                url: '@Url.Action("Favorite", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    // Handle the successful response from the server
+                    console.log(response);
+    @*imgElement.removeEventListener('click',function(){
+                        Favorite(this,1);
+                        });*@
+                        document.getElementById("AddToFavorites").style.display = "block";
+                    document.getElementById("miniAlert").style.display = "none";
+                    imgElement.onclick = function () {
+                        RemoveFromFavorites2(this, globalPostID2);
+                    };
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors that occurred during the AJAX request
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,747 @@
+﻿@using App.Entities.Models;
+@using WebUI.Controllers;
+
+@{
+
+    Layout = null;
+    var car = ViewBag.Car as Car;
+    var post = ViewBag.Post as Post;
+    var borderColor = "";
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/SelectedCar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/js/Favorite.js" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adding.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+
+    <style>
+
+    </style>
+</head>
+
+<!-- ... (previous code) ... -->
+
+<body>
+    <div class="car-container">
+        @if (car.Finance.IsBarter == true && car.Finance.IsCredit == false)
+        {
+            borderColor = "green";
+        }
+        else if (car.Finance.IsCredit == true && car.Finance.IsBarter == false)
+        {
+            borderColor = "#F2BE22";
+
+        }
+        else if (car.Finance.IsCredit == true && car.Finance.IsBarter == true)
+        {
+            borderColor = "greenyellow";
+        }
+        else
+        {
+            borderColor = "#1E3050";
+        }
+        <div style="border:none;" class="car-card">
+
+            <div style="text-align:center;margin:auto;" class="car-details">
+
+
+                <div class="carousel">
+                    @foreach (var item in car.Images)
+                    {
+                        <div style="border-radius:10px;" class="carousel__item carousel__item--visible">
+                            <img class="sliderImg" style="box-sizing: border-box;" src="@item.Link" alt="">
+                        </div>
+                    }
+
+                    <div class="carousel__action">
+                        <button class="btn-prev" id="carousel__btn--prev"></button>
+                        <button class="btn-next" id="carousel__btn--next"></button>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+
+                <div class="additional-details">
+                    <h5 style="text-align:center;color: #fbb72c;">About Car</h5>
+                    <ul>
+                        <li style="text-align:center;font-size:14.5px;"> <b>@car.About</b></li>
+                    </ul>
+                    <hr />
+
+                    <h5 style="color: #fbb72c;text-align:center;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bold; ">Car's Information</h5>
+                    <div style="display:inline-block;text-align:center;margin-left:10px;" class="additional-details">
+                        <br />
+                        <ul>
+                            <li><span>City:</span> @car.City</li>
+                            <!-- HTML for editing a field -->
+                            <li>
+                                <span>Model:</span>
+                                @car.Main.Model
+                            </li>
+                            <li><span>Vendor:</span> @car.Main.Vendor</li>
+                            <li><span>Year:</span> @car.Main.Year</li>
+                            <li><span>Ban:</span> @car.Main.CarType</li>
+                            <li><span>Color:</span> @car.Main.Color</li>
+                            <li><span>Horse Power:</span> @car.Engine.EnginePower <i id="additionalwords">hp</i></li>
+                            <li><span>Crashed:</span> @car.Status.IsHit</li>
+                            <li><span>Kilometer:</span> @car.Main.Kilometer <i id="additionalwords2">km</i></li>
+                        </ul>
+                    </div>
+                    <div style="display:inline-block;text-align:center;margin-left:25px;" class="additional-details">
+                        <h5></h5>
+                        <ul>
+                            <li><span>Gear:</span> @car.Transmission</li>
+                            <li><span>Traction Type:</span> @car.TractionType</li>
+                            <li><span>VIN Code:</span> <b>@car.VINCode</b></li>
+                            <li><span>Seat Count:</span> @car.SeatCount</li>
+                            <li><span>Owner Count:</span> @car.OwnerCount</li>
+                            <li><span>Market Place:</span> @car.MarketPlace</li>
+                            @*BU hisse yazilmali*@
+                            <li><span>EngineCapacity:</span> @car.Engine.EngineCapacity <i id="additionalwords3">sm3</i></li>
+                            <li><span>FuelType:</span>@car.Engine.FuelType</li>
+                            <li><span>Painted:</span> @car.Status.IsPaint</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+                <hr />
+                <div style="width:100%;">
+                    @*	<img style="	width: 97%;
+                    height: 35vh;
+                    border-radius: 10px;display:block;" src="http://res.cloudinary.com/dtstnopzb/image/upload/v1691747542/1.jpg" alt="">*@
+
+
+
+
+                    <div style="display:block;margin-bottom:10px;" class="car-details-section">
+
+                        <div class="contact-details">
+                            <div style="text-align:center;" class="contact-info">
+                                <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" alt="Profile Photo">
+                                <div class="person-info">
+                                    <p>@post.User.Fullname</p>
+                                    <p style="color: #fbb72c;">@post.User.PhoneNumber</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-info">
+                            <p style="text-align:center;
+			color: #ccc;
+			font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">@car.Post.Date.ToLongDateString()</p>
+                            <div class="person-info">
+                                <br />
+                                <p style="color: #fbb72c;">Viewcount: @post.ViewCount</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div class="additional-details">
+
+                    <br />
+                    <ul style="text-align:center;margin:auto;" class="car-price">
+                        <li>
+                            <b style="color:#fbb72c;font-size:30px;">@Convert.ToInt32(@car.Finance.Price)</b>   <i style="font-size:25px;color:#fbb72c;" id="additionalwords4">AZN</i>
+                        </li>
+                    </ul>
+                    @if (ViewBag.IsEditable != true)
+                    {
+
+                        <div>
+
+                            <img onclick="Favorite(this)" style="
+                width: 35px;
+                margin-top: -34px;
+                height: 35px;
+                background-size: cover;
+                cursor: pointer;
+text-align:center;margin:auto;" class="favorite-button favorite-icon" data-postid="@post.Id" src="../css/whte.png" />
+
+                        </div>
+
+
+                    }
+
+                    <div>
+                    </div>
+
+                    @if (ViewBag.IsEditable != true)
+                    {
+
+                        <br id="similarbr" />
+                        <hr id="similarhr" />
+                        <div class="additional-details">
+                            <br>
+                            <br />
+                            <h3 id="similarword" style="text-align:center;color: white;font-weight:bold;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">You Can Also Interested In</h3>
+
+                            <div class="otherCarContainer" id="OtherCarContainer" style="">
+                            </div>
+
+                        </div>
+                        <br />
+                        <hr />
+                        <div style="text-align:center;margin:auto;width:90%;border-radius:10px;" class="login-container">
+                            <div style="background-color:#29323c;" class="form-container">
+                                <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;" class="opacity"><b>Write Comments Here</b></h1>
+                                    <textarea id="comment" style="color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" type="text" placeholder="Comment"></textarea>
+                                <input value="Post A Comment" onclick="AddReview(@post.Id)" type="button" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;background-color:grey;padding:10px;																								  border: none;
+																								  color: #fff;
+																								  border-radius: 7px;
+																								  letter-spacing: 4px;
+																								  font-weight: 700;
+																								  text-transform: uppercase;
+																								  transition: 0.5s;
+																										  transition-property: box-shadow; background: rgb(0,140,255);
+																										  box-shadow: 0 0 25px rgb(0,140,255); box-shadow: 0 0 5px rgb(0,140,255),
+																											  0 0 25px rgb(0,140,255),
+																											  0 0 50px rgb(0,140,255),
+																											  0 0 100px rgb(0,140,255);" class="opacity" />
+                                <br/>
+                                <br/>
+                                <div id="comments">
+
+                                    @if (post.Reviews != null && post.IsDeleted == false)
+                                    {
+
+                                        foreach (var item in post.Reviews)
+                                        {
+                                            <div style="display:flex;margin-top:15px;border:0.1px solid white;padding:6px;border-radius:10px;">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" width="40px" height="40px" alt="" />
+                                                <div style="flex-grow: 1; margin-left: 10px; text-align: left;">
+                                                    <h5>@item.Comment</h5>
+                                                    <h5 style="float:right;font-size:14px;color:grey;">(@item.Date)</h5>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        }
+
+                                    }
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    }
+
+
+
+
+
+                </div>
+                <div>
+                    @if (ViewBag.IsEditable != null)
+                    {
+                        if (ViewBag.IsEditable == true)
+                        {
+                            <img src="../css/pen.png" alt="Image" id="editButton" class="top-right-image">
+                        }
+                    }
+                    <img src="../css/floppy-disk.png" alt="Image" style="display:none;" id="saveButton" class="top-right-image">
+                </div>
+
+            </div>
+        </div>
+</body>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    var OtherCarContainer = document.getElementById("OtherCarContainer");
+    $.ajax({
+        url: '@Url.Action("ShowSimilarCars", "Car")',
+        type: 'POST',
+        data: { carId: @Html.Raw(car.Id)},
+        success: function (response) {
+            console.log(response);
+            let content = "";
+            let imgUrl = "../css/whte.png";
+            let p = response.posts;
+            console.log("VIPPPPPSSSS");
+            let favorites = response.favorites
+            console.log(favorites);
+            console.log(p);
+            if (p.length == 0) {
+                content = ``;
+                document.getElementById("similarword").style.display = "none";
+                document.getElementById("similarbr").style.display = "none";
+                document.getElementById("similarhr").style.display = "none";
+
+            }
+            else {
+                for (let i = 0; i < p.length; i++) {
+                    imgUrl = "../css/whte.png";
+                    if (!p[i].IsDeleted) {
+                        if (favorites != null) {
+
+                            for (let k = 0; k < favorites.length; k++) {
+                                if (p[i].id == favorites[k].postId) {
+                                    imgUrl = "../css/red.png";
+                                }
+                            }
+                        }
+                        var engine = p[i].car.engine.engineCapacity / 1000;
+                        var borderColor = "";
+                        var creditImage = "../css/Empty.png";
+                        var barterImage = "../css/Empty.png";
+                        var vipImage = "../css/vipimg.png";
+
+                        if (p[i].car.finance.isBarter == true && p[i].car.finance.isCredit == false) {
+                            barterImage = "../css/exchange.png";
+                            creditImage = "../css/Empty.png";
+                        } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == false) {
+                            creditImage = "../css/percentage.png";
+                            barterImage = "../css/percentage.png";
+                            creditImage = "../css/Empty.png";
+                        } else if (p[i].car.finance.isCredit == true && p[i].car.finance.isBarter == true) {
+                            creditImage = "../css/percentage.png";
+                            barterImage = "../css/exchange.png";
+                        } else {
+                            creditImage = "../css/Empty.png";
+
+                        }
+
+                        if (p[i].isVip) {
+                            content += `
+                                        <div style="border: 5px solid #900C3F;;width: 300px;
+                        display: inline-block;
+                        text-align:left;
+                        justify-content: center;
+                        gap: 10px;
+                        margin: 30px;
+                        padding: 20px 15px;
+                        background-color: transparent;
+                        backdrop-filter: blur(5px);
+                        border-radius: 10px;
+                        color: white;
+                        position: relative;
+                        cursor: pointer;
+                        font-weight: 900;
+                        transition-duration: .2s;" class="car-card">
+                                        <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                            <div class="car-tumb" style="position: relative;">
+                                                <!-- Icon Container -->
+                                                <div style="position: absolute; top: 5px; right: 5px;">
+                                                    <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <div style="position: absolute; top: 5px; right: 33px;">
+                                                        <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                    <img style="width: 265px;
+                            height: 160px;" src="${p[i].car.images[0].link}" alt="">
+                                            </div>
+                                            <br>
+                                            <div class="car-details">
+                                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                                        <p style="            font-size: 11.45px;
+                                color: #ccc;
+                                text-align: center;
+                                margin: auto;
+                                margin-left: 10px;
+                                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                                        <p style="            font-size: 11.45px;
+                                color: #ccc;
+                                text-align: center;
+                                margin: auto;
+                                margin-left: 10px;
+                                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">${p[i].car.city}, ${p[i].date}</p>
+                                                <hr />
+                                                <div style="text-align:left;" class="car-price">${p[i].car.finance.price} AZN</div>
+                                            </div>
+                                        </a>
+                                             <div>
+                                    <img onclick="Favorite(this)" style="    position: absolute;
+                            right: 30px;
+                            transform: translateY(-50%);
+                            width: 35px;
+                            margin-top: -25px;
+                            height: 35px;
+                            background-size: cover;
+                            cursor: pointer;" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+
+                                                </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                `;
+                        }
+                        else {
+                            content += `
+                                        <div style="border: 5px solid #1E3050;width: 300px;
+                        display: inline-block;
+                        text-align:left;
+                        justify-content: center;
+                        gap: 10px;
+                        margin: 30px;
+                        padding: 20px 15px;
+                        background-color: transparent;
+                        backdrop-filter: blur(5px);
+                        border-radius: 10px;
+                        color: white;
+                        position: relative;
+                        cursor: pointer;
+                        font-weight: 900;
+                        transition-duration: .2s;" class="car-card">
+                                        <a href="/Car/SelectedCar?carId=${p[i].car.id}" style="text-decoration: none;color:inherit;">
+                                            <div class="car-tumb" style="position: relative;">
+                                                <!-- Icon Container -->
+                                                <div style="position: absolute; top: 5px; right: 5px;">
+                                                    <img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                <div style="position: absolute; top: 5px; right: 33px;">
+                                                        <img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+                                                </div>
+                                                    <img style="width: 265px;
+                            height: 160px;" src="${p[i].car.images[0].link}" alt="">
+                                            </div>
+                                            <br>
+                                            <div class="car-details">
+                                                <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${p[i].car.main.vendor} ${p[i].car.main.model}</h4>
+                                                        <p style="            font-size: 11.45px;
+                                color: #ccc;
+                                text-align: center;
+                                margin: auto;
+                                margin-left: 10px;
+                                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">${p[i].car.main.year}, ${engine}, ${p[i].car.main.kilometer} km</p>
+                                                        <p style="            font-size: 11.45px;
+                                color: #ccc;
+                                text-align: center;
+                                margin: auto;
+                                margin-left: 10px;
+                                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">${p[i].car.city}, ${p[i].date}</p>
+                                                <hr />
+                                                <div style="text-align:left;" class="car-price">${p[i].car.finance.price} AZN</div>
+                                            </div>
+                                        </a>
+                                             <div>
+                                    <img onclick="Favorite(this)" style="    position: absolute;
+                            right: 30px;
+                            transform: translateY(-50%);
+                            width: 35px;
+                            margin-top: -25px;
+                            height: 35px;
+                            background-size: cover;
+                            cursor: pointer;" class="favorite-button favorite-icon" data-postid="${p[i].id}" src="${imgUrl}" />
+
+                                                </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                `;
+                        }
+
+
+
+
+                    }
+
+                }
+            }
+
+            OtherCarContainer.innerHTML = content;
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+
+
+
+
+    function AddReview(postId) {
+        let comment = document.getElementById("comment").value;
+        $.ajax({
+            url: '@Url.Action("AddReview", "Car")',
+            type: 'POST',
+            data: { comment: comment, postId: postId },
+            success: function (response) {
+                console.log(response);
+                let commentsDiv = document.getElementById("comments")
+                commentsDiv.innerHTML += `
+                        <div style="display:flex;margin-top:15px;border:0.1px solid white;padding:6px;border-radius:10px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" width="40px" height="40px" alt="" />
+                                                        <div style="flex-grow: 1; margin-left: 10px; text-align: left;">
+                                                            <h5>${comment}</h5>
+                                                            <h5 style="float:right;font-size:14px;color:grey;">${response.date}</h5>
+                                                        </div>
+                                                        <hr />
+                                                    </div>
+                    `
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+
+
+    let slidePosition = 0;
+    const slides = document.getElementsByClassName("carousel__item");
+    const totalSlides = slides.length;
+
+
+    document.getElementById("carousel__btn--next")
+        .addEventListener("click", function () {
+            moveToNextSlide();
+        });
+    document.getElementById("carousel__btn--prev")
+        .addEventListener("click", function () {
+            moveToPrevSlide();
+        });
+
+    function updateSlidesPosition() {
+        for (let slide of slides) {
+            slide.classList.remove("carousel__item--visible");
+            slide.classList.add("carousel__item--hidden");
+        }
+        slides[slidePosition].classList.add("carousel__item--visible");
+    }
+
+    function moveToNextSlide() {
+
+        if (slidePosition === totalSlides - 1) {
+            slidePosition = 0;
+        } else {
+            slidePosition++;
+        }
+        updateSlidesPosition();
+    }
+
+    function moveToPrevSlide() {
+
+        if (slidePosition === 0) {
+            // totalSlides -1, if you wan't infinite carousel effect to both ways
+            slidePosition = 0;
+        } else {
+            slidePosition--;
+        }
+        updateSlidesPosition();
+    }
+
+    var inputtemp = "";
+
+    document.getElementById("editButton").addEventListener("click", function () {
+        const additionalwords = document.getElementById("additionalwords");
+        const additionalwords2 = document.getElementById("additionalwords2");
+        const additionalwords3 = document.getElementById("additionalwords3");
+        const additionalwords4 = document.getElementById("additionalwords4");
+        document.getElementById("editButton").style.display = "none";
+        document.getElementById("saveButton").style.display = "inline-block";
+        additionalwords.style.display = "none";
+        additionalwords2.style.display = "none";
+        additionalwords3.style.display = "none";
+        additionalwords4.style.display = "none";
+
+        const listItems = document.querySelectorAll(".additional-details ul li b");
+
+        listItems.forEach(function (item, index) {
+            let input;
+            if (index === 0) {
+                // Create a textarea for the first element
+                input = document.createElement("textarea");
+                input.style.width = "100%";
+                input.style.height = "50px";
+                input.style.backgroundColor = "transparent";
+                input.style.border = "1px solid white";
+                input.style.color = "white";
+                input.style.fontWeight = "bold";
+                input.style.margin = "0px";
+                input.style.padding = "0px";
+                input.style.textAlign = "center";
+                input.value = item.textContent.trim();
+            } else {
+                // For other elements, create regular input elements
+                input = document.createElement("input");
+                input.value = item.textContent.trim();
+                inputtemp = item.textContent.trim();
+                input.style.backgroundColor = "transparent";
+                input.style.border = "1px solid white";
+                input.style.fontWeight = "bold";
+                input.style.color = "white";
+                input.style.margin = "0px";
+                input.style.padding = "0px";
+                if (index === listItems.length - 1) {
+                    // Change the style of the last element
+                    input.style.width = "100%";
+                    input.style.color = "#fbb72c"; // Replace with your desired style changes
+                    input.style.fontWeight = "bold";
+                    input.style.fontSize = "30px";
+                    input.style.textAlign = "center";
+                    input.type = 'number';
+                }
+            }
+
+            item.parentNode.replaceChild(input, item);
+        });
+    });
+
+    document.getElementById("saveButton").addEventListener("click", function () {
+        // Hide the "Save" button and show the "Edit" button
+        document.getElementById("editButton").style.display = "inline-block";
+        document.getElementById("saveButton").style.display = "none";
+        const additionalwords = document.getElementById("additionalwords");
+        const additionalwords2 = document.getElementById("additionalwords2");
+        const additionalwords3 = document.getElementById("additionalwords3");
+        const additionalwords4 = document.getElementById("additionalwords4");
+        additionalwords.style.display = "inline-block";
+        additionalwords2.style.display = "inline-block";
+        additionalwords3.style.display = "inline-block";
+        additionalwords4.style.display = "inline-block";
+
+        // Get all input and textarea elements within .additional-details ul li b
+        const inputElements = document.querySelectorAll(".additional-details ul li input, .additional-details ul li textarea");
+        let Changes = [];
+        inputElements.forEach(function (input, index) {
+            Changes.push(input.value)
+            let b;
+            if (index === 0) {
+                // For the first element, create a <b> element
+                b = document.createElement("b");
+                b.textContent = input.value;
+            } else {
+                // For other elements, create regular <b> elements
+                b = document.createElement("b");
+                b.textContent = input.value;
+                if (index === inputElements.length - 1) {
+                    // Change the style of the last element
+                    b.style.color = "#fbb72c"; // Replace with your desired style changes
+                    b.style.fontWeight = "bold";
+                    b.style.fontSize = "30px";
+                    if (input.value == "") {
+                        console.log(input.value +
+                            "LAST")
+                        input.value = inputtemp;
+                        console.log(input.value +
+                            "LAST2")
+                        b.textContent = inputtemp;
+                    }
+                }
+
+            }
+
+            input.parentNode.replaceChild(b, input);
+        });
+        SaveChanges(Changes);
+    });
+    function SaveChanges(Changes) {
+        $.ajax({
+            url: '@Url.Action("SaveChanges", "Car")',
+            type: 'POST',
+            data: { carId: @Html.Raw(car.Id), changes: JSON.stringify(Changes) },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // JavaScript functions for editing and saving a field
+    //function toggleEdit(fieldName) {
+    //	const valueElement = document.getElementById(`${fieldName}Value`);
+    //	const inputElement = document.getElementById(`${fieldName}Input`);
+    //	const editButton = document.getElementById('editButton');
+    //	const saveButton = document.getElementById('saveButton');
+
+    //	valueElement.style.display = 'none';
+    //	inputElement.style.display = 'inline-block';
+    //	inputElement.value = valueElement.textContent.trim();
+    //	editButton.style.display = 'none';
+    //	saveButton.style.display = 'inline-block';
+    //	inputElement.focus();
+    //}
+
+    //function saveField(fieldName) {
+    //	const valueElement = document.getElementById(`${fieldName}Value`);
+    //	const inputElement = document.getElementById(`${fieldName}Input`);
+    //	const editButton = document.getElementById('editButton');
+    //	const saveButton = document.getElementById('saveButton');
+
+    //	valueElement.textContent = inputElement.value;
+    //	valueElement.style.display = 'inline-block';
+    //	inputElement.style.display = 'none';
+    //	saveButton.style.display = 'none';
+    //	editButton.style.display = 'inline-block';
+    //}
+
+
+    var globalPostId = 0;
+    function Favorite(imgElement) {
+        const postId = imgElement.getAttribute('data-postid');
+        if (imgElement.src.includes('whte.png')) {
+            imgElement.src = '../css/red.png';
+            $.ajax({
+                url: '@Url.Action("Favorite", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    if (response.redirectUrl) {
+                        // Handle the redirection manually
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        // Handle other responses
+                        globalPostId = postId;
+                        console.log(response);
+                        imgElement.onclick = function () {
+                            Favorite(this, globalPostId);
+                        };
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert(error)
+                }
+            });
+
+
+        } else {
+            imgElement.src = '../css/whte.png';
+            $.ajax({
+                url: '@Url.Action("FavoriteDelete", "Car")',
+                type: 'POST',
+                data: { param: postId },
+                success: function (response) {
+                    console.log(response);
+                    imgElement.onclick = function () {
+                        Favorite(this, globalPostId);
+                    };
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+        const favoriteIcons = document.querySelectorAll(`.favorite-icon[data-postid="${postId}"]`);
+        favoriteIcons.forEach(function (icon) {
+            icon.src = imgElement.src;
+        });
+
+    }
+
+
+
+</script>
+
+</html>
+

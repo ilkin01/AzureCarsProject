@@ -1,0 +1,458 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+
+
+/*Login CSS*/
+
+
+
+
+.container2 {
+    cursor: pointer;
+}
+
+    .container2 input {
+        display: none;
+    }
+
+    .container2 svg {
+        overflow: visible;
+    }
+
+.path {
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+}
+
+.container2 input:checked ~ svg .path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+}
+
+
+:root {
+    --background: #1a1a2e;
+    --color: #ffffff;
+    --primary-color: #0f3460;
+}
+
+
+
+html {
+    font-size: 14px;
+}
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    background: url('https://images4.alphacoders.com/131/1313071.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-family: 'Montserrat';
+}
+
+
+.labelcss {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight:bold;
+    font-size:20px;
+}
+
+
+.numbercss {
+    /*   background-color:pink; */
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 28px;
+    right:  50px;
+    cursor: pointer;
+}
+
+.profilecss {
+    /*   background-color:pink; */
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 28px;
+    right: 80px;
+    cursor: pointer;
+}
+
+
+
+
+/* Main Body CSS */
+
+h1 {
+    font-size: 60px;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    text-transform: uppercase;
+    font-size: 120px;
+    letter-spacing: 5px;
+    padding-top: 40px;
+}
+
+
+
+
+
+.input-container {
+    text-align: center;
+    flex: 1;
+}
+
+.labelcss {
+    text-align: center;
+}
+
+
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-container {
+    position: relative;
+    width: 64rem;
+}
+
+.form-container {
+    border: 1px solid hsla(0, 0%, 65%, 0.158);
+    box-shadow: 0 0 36px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(20px);
+    z-index: 99;
+    padding: 2rem;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+
+    .form-container section {
+        display: flex;
+        margin-top:30px;
+        justify-content: space-between;
+    }
+
+
+    .form-container section div {
+        text-align:center;
+    }
+
+
+        .form-container section div div {
+            z-index: 5;
+            margin-top: 20px;
+            background-color: transparent;
+        }
+
+.add-container form input {
+    display: block;
+    padding: 8px;
+    color: var(--color);
+    outline: none;
+    background-color: #9191911f;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    font-size: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+    .add-container form input:focus {
+        box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2);
+        animation: wobble 0.3s ease-in;
+        -webkit-animation: wobble 0.3s ease-in;
+    }
+
+
+.mybtn {
+    background-color: var(--primary-color);
+    color: var(--color);
+    display: block;
+    padding: 13px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all 0.1s ease-in-out;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+}
+
+
+
+.minmaxinput {
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 6rem;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    body {
+        position: relative;
+        background: url('../css/carmobilever.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: 'Montserrat';
+    }
+
+    filterclass{
+        width:100%;
+    }
+
+    .add-container {
+        width: 100%;
+        padding: 0px;
+    }
+
+    .sectionFor div input{
+        display:block;
+    }
+
+    .container {
+        display: inline-block;
+        text-align:center;
+        margin:auto;
+    }
+    .section {
+        display: inline-block;
+        margin-top: 20px;
+    }
+    .labelcss {
+        font-size: 14px; 
+        margin-top:15px;/* Adjust the font size as needed for smaller screens */
+    }
+
+    select option {
+        font-size: 15px; /* Set the desired font size */
+    }
+  
+    .labelcss{
+        margin-top:20px;
+    }
+
+   .sec-center{
+       width:86%;
+       height:auto;
+
+   }
+
+
+    .LastOne div input{
+        width:50%;
+    }
+    /* Remove margin and padding on the body and HTML elements */
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+
+    .add-container form input {
+        display: block;
+        padding: 5px;
+        color: var(--color);
+        outline: none;
+        background-color: #9191911f;
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+        letter-spacing: 0.8px;
+        font-size: 10px;
+    }
+}
+
+.add-container form button {
+    background-color: var(--primary-color);
+    color: var(--color);
+    display: block;
+    padding: 2.6px;
+    border-radius: 0.5px;
+    outline: none;
+    font-size: 3.6px;
+    letter-spacing: 0.3px;
+    font-weight: bold;
+    width: 20%;
+    cursor: pointer;
+    margin-bottom: 0.4rem;
+    transition: all 0.02s ease-in-out;
+}
+
+
+
+    .add-container form button:hover {
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+        transform: scale(1.02);
+        -webkit-transform: scale(1.02);
+        -moz-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+        -o-transform: scale(1.02);
+    }
+
+
+
+.illustration {
+    position: absolute;
+    top: -6%;
+    right: -100px;
+    width: 350px;
+    height: 200px;
+    transform: rotate(375deg);
+}
+
+
+textarea{
+    width:100%;
+}
+
+.contactInput{
+    width:29.1rem;
+    margin-top:30px;
+}
+
+
+@media screen and (max-width: 800px) {
+    /* Adjust the styles for smaller screens here */
+
+
+    body {
+        position: relative;
+        background: url('../css/carmobilever.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: 'Montserrat';
+    }
+
+    form input{
+        width:90%;
+    }
+
+    filterclass {
+        width: 100%;
+    }
+    .illustration {
+        position: absolute;
+        top: -1%;
+        right: -14px;
+        width: 350px;
+        height: 200px;
+        transform: rotate(375deg);
+    }
+
+
+    textarea{
+        width:110%;
+    }
+    .contactInput{
+        width:100%;
+    }
+
+    .container {
+        display: inline-block;
+        text-align: center;
+        margin: auto;
+    }
+
+    .section {
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .labelcss {
+        font-size: 14px;
+        margin-top: 15px; /* Adjust the font size and spacing as needed for smaller screens */
+    }
+
+    .numbercss,
+    .profilecss {
+        width: 20px;
+        height: 20px;
+        top: 28px;
+        right: 10px; /* Adjust the positioning for smaller screens */
+    }
+
+    .add-container {
+        width: 100%;
+    }
+
+    .sectionFor div input {
+        display: block;
+    }
+
+    select option {
+        font-size: 15px; /* Set the desired font size */
+    }
+
+    .sec-center {
+        width: 100%;
+        height: auto;
+    }
+
+    .LastOne div input {
+        width: 50%;
+    }
+
+    /* Adjust the input and button styles for smaller screens */
+    .add-container form input {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .add-container form button {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .illustration {
+        top: -6%;
+        right: -20px; /* Adjust the positioning for smaller screens */
+        width: 200px;
+        height: 100px;
+        transform: rotate(375deg);
+    }
+}

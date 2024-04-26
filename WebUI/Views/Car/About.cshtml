@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/FavoriteC.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adding.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,600&family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+    .background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        backdrop-filter: blur(10px); /* Adjust the blur intensity */
+    }
+
+    .centered-blurred-div {
+        background-color: transparent; /* Adjust the alpha value for the content background */
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 10px;
+    }
+
+    .content {
+        text-align: center;
+        color: white;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: bold;
+        text-align:center;
+       font-family: 'Josefin Sans', sans-serif;
+    }
+
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    h3{
+        color:#64CCC5;
+    }
+
+    img {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .holder {
+        max-width: 1000px;
+        margin: 30px auto;
+    }
+
+        .holder .item {
+            width: 50%;
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+            background-size: cover;
+            padding: 0 15px;
+        }
+        @@media screen and (max-width: 768px) {
+            h1 {
+                font-size: 24px; /* Decrease the font size for h1 on smaller screens */
+            }
+
+            h3{
+                font-size: 20px; /* Decrease the font size for h1 on smaller screens */
+
+            }
+
+            /* Update font sizes for paragraphs and other text elements as needed */
+            p {
+                font-size: 9px; /* Example font size for paragraphs on smaller screens */
+            }
+
+            /* Increase the size of images for smaller screens */
+            img {
+                max-width: 100%; /* Allow images to take up the full width of the screen */
+                height: auto; /* Maintain the aspect ratio of images */
+            }
+        }
+</style>
+</head>
+@{
+    Layout = null;
+}
+
+
+<body>
+    <div class="background">
+        <div class="centered-blurred-div">
+                <h1>About the Ultimate Car Selling Website</h1>
+            <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;text-align:center;">For Any Question : <b style="font-weight:bolder;color:aquamarine;">+994 50 851 6991</b>, <b style="font-weight:bolder;color:aquamarine;">+994 51 308 1274</b></p>
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;">Cars Being Listed</h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Our website is a bustling hub where car enthusiasts from all walks of life come together to showcase and sell their prized vehicles. Whether you're a collector, a first-time seller, or an experienced trader, our platform welcomes everyone with open arms.</p>
+      
+                    </div>
+                    <div class="item">
+                        <img src="../css/first.png">
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    <div class="item">
+                        <img src="../css/credit.png">
+                    </div>
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;color:orange;">Credit Indicator</h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">At the Ultimate Car Marketplace, we understand that not all car transactions follow a traditional path. That's why we've introduced 'Barter' and 'Credit' indicators – to provide clarity and convenience to both buyers and sellers. What you see in this picture means that this Car can with a <b style="color:orange">CREDIT</b>. Also in Main Page or when you filter any car you can see this image <img src="../css/percentage.png" style="width:30px;height:30px;" /> . This also means <b style="color:orange">CREDIT</b>.</p>
+
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;color:lawngreen;">Barter Indicator</h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">At the Ultimate Car Marketplace, we understand that not all car transactions follow a traditional path. That's why we've introduced 'Barter' and 'Credit' indicators – to provide clarity and convenience to both buyers and sellers. What you see in this picture means that this Car can with a <b style="color:lawngreen;">BARTER</b>. Also in Main Page or when you filter any car you can see this image <img src="../css/exchange.png" style="width:30px;height:30px;" /> . This also means <b style="color:lawngreen;">BARTER</b>.</p>
+
+                    </div>
+                    <div class="item">
+                        <img src="../css/barter.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    <div class="item">
+                        <img src="../css/both.png">
+                    </div>
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;"><b style="color:lawngreen">Barter</b> and <b style="color:orange">Credit</b></h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">At the Ultimate Car Marketplace, we understand that not all car transactions follow a traditional path. That's why we've introduced 'Barter' and 'Credit' indicators – to provide clarity and convenience to both buyers and sellers. What you see in this picture means that this Car is selling both <b style="color:lawngreen;">BARTER</b> <img src="../css/exchange.png" style="width:30px;height:30px;" /> & <b style="color:orange">CREDIT</b> <img src="../css/percentage.png" style="width:30px;height:30px;" />.</p>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;">User Profile</h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Every member of our community has access to a dedicated user profile, your personal command center for managing your car listings and preferences.As the camera navigates through a user's profile, you'll discover the power at your fingertips. Easily view your current cars for sale, edit or delete listings, and even elevate them to the prestigious VIP status with a single click. Your profile, your rules.</p>
+
+                    </div>
+                    <div class="item">
+                        <img  src="../css/alluser.png">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    <div class="item">
+                        <img src="../css/favoritesitem.png">
+                    </div>
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;"><b style="color:red">Favorites</b> <img src="../css/red.png" style="width:35px;height:35px;"/></h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Found a car that has captured your heart? With our <b style="color:red">Favorites</b> feature, keeping track of your dream rides has never been easier. Simply click the <b style="color:red">Favorites</b> <img src="../css/whte.png" style="width:25px;height:25px;" />  button, and you'll create a curated list of your dream cars. But that's not all; we'll even notify you when any of your favorite cars find their new home, so you're always in the know. Also You can Remove your Favorite From Favorites List using this icon <img src="../css/remove.png" style="width:25px;height:25px;" /></p>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;">ADD CAR</h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Got a car to sell? Our 'Add a Car' section is your gateway to sharing your vehicle with the world, ensuring it receives the attention it deserves.Whether you're an experienced seller or a first-timer, our platform ensures that your car takes the spotlight it deserves. Listing your vehicle has never been more straightforward or enjoyable.</p>
+
+                    </div>
+                    <div class="item">
+                        <img src="../css/AddToCar.png">
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="content">
+                <br />
+                <hr />
+                <br />
+                <div class="holder">
+                    <div class="item">
+                        <img src="../css/aboutvip.png">
+                    </div>
+                    <div class="item">
+                        <h3 style="font-family: 'Righteous', cursive;"><b style="color:goldenrod">VIP Posts</b> <img src="../css/vipimg.png" style="width:35px;height:35px;"/></h3>
+                        <hr />
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Advatages of VIP : Prominent Placement: Design the main page of your website to include a dedicated section at the top for VIP posts. This section should immediately catch the user's attention.
+
+Eye-catching Visuals: Use high-quality images of VIP cars as banners or thumbnails to make the section visually appealing.
+
+VIP Badge: Add a "VIP" badge or icon to the VIP car listings to make them easily identifiable.
+
+Featured Listings: Display a limited number of the most attractive VIP posts, such as high-end luxury cars or rare collector's items.</p>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+                @*<div class="closing">
+                    <h2>Closing</h2>
+                    <p>Join us today and experience the future of car trading. The Ultimate Car Marketplace – where cars meet their perfect match.</p>
+                    <p>Visit us now at [Your Website URL] and drive into a world of endless possibilities.</p>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</body>
+</html>

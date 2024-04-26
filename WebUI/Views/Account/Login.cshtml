@@ -1,0 +1,45 @@
+﻿@model PhoneNumberViewModel
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+</head>
+
+@{
+    Layout = null;
+}
+
+
+<style>
+    body{
+        overflow-y:hidden;
+    }
+</style>
+
+<body>
+    <section id="loginsec" class="container">
+        <div  class="login-container">
+            <div class="circle circle-one"></div>
+            <div class="form-container">
+                <img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png" alt="illustration" class="illustration" />
+                @if (@ViewBag.Data != null)
+                {
+                    <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:15px;" class="opacity"><b>@ViewBag.Data</b></h1>
+                }
+                <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;" class="opacity"><b>Enter Your Phone Number</b></h1>
+                <form asp-controller="Account" asp-action="Login" method="post"
+                      role="form">
+                    <input asp-for="PhoneNumber" style="color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" type="tel" placeholder="+994 12 345 67 89" />
+                    <input value="Submit" type="submit" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="opacity" />
+                </form>
+            </div>
+            <div class="circle circle-two"></div>
+        </div>
+    </section>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>

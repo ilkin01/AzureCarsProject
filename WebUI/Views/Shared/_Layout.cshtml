@@ -1,0 +1,252 @@
+﻿@using App.Entities.Models;
+@using WebUI.Controllers;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - WebUI</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+</head>
+
+
+<style>
+	span::before,
+	span::after {
+		content: "";
+		display: block;
+		background-color: #fff;
+		width: 100%;
+		height: 4px;
+		position: absolute;
+	}
+	/* Hide the logout link by default */
+	.logout-link {
+		display: none;
+		text-align: center;
+		text-decoration: none;
+		color: #333; /* Change the color as needed */
+	}
+
+	/* Show the logout link when hovering over the SVG */
+	.image-container {
+		width: 100%;
+	}
+
+		.image-container:hover .logout-link {
+			display: block;
+			margin-left: -17px;
+			margin-top: 10px; /* Adjust the spacing as needed */
+		}
+</style>
+<body>
+
+
+	<header>
+
+
+
+
+		@* <svg xmlns="http://www.w3.org/2000/svg" width="26.5px" height="26.5px" viewBox="0 0 448 512">
+
+		<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+		</svg>*@
+
+
+
+		<!--Navbar Links-->
+
+		<div class="profilecss">
+		</div>
+
+		<div style="display:flex;">
+
+
+
+			<div style="background-color:transparent;" class="bars" id="nav-action">
+
+				<span id="simpleSpan" class="bar"> </span>
+				<img id="hamburgerForResponsive" style="width:35px;height:35px;margin-top:-17.5px;" src="~/css/more.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" />
+
+			</div>
+
+
+		</div>
+
+
+
+
+
+		<nav id="navForMobile">
+			<div style=" background-color: transparent;backdrop-filter: blur(5px);" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+				<div class="offcanvas-header">
+					<h5 class="offcanvas-title" id="offcanvasRightLabel"><b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">MENU</b></h5>
+					<button type="button" class="btn-close text-white" style="width: 25px; height: 25px;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					<img style="width:20px;height:20px;margin-top:-10px;" src="~/css/XForHam.png" data-bs-dismiss="offcanvas" aria-label="Close" />
+
+
+				</div>
+				<div class="offcanvas-body">
+					<ul>
+						<li>
+							<a asp-controller="Car" asp-action="Cars" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+								<b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;color:white;">Cars</b>
+							</a>
+						</li>
+						<li>
+							<a asp-controller="Car" asp-action="About" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+								<b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;color:white;">About</b>
+							</a>
+						</li>
+						<li>
+							<a asp-controller="Car" asp-action="AddCar" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+								<b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;color:white;">Add Car</b>
+							</a>
+						</li>
+						<li>
+							<a asp-controller="Car" asp-action="FavoritesMenu" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+								<b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;color:white;">Favorites</b>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+		<nav id="nav">
+
+			<ul>
+				<li class="shape-circle circle-two">
+					<a asp-controller="Car" asp-action="FavoritesMenu" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+						<svg xmlns="http://www.w3.org/2000/svg" style="margin-left:-40px;margin-right:10px;" height="38px" width="38px" viewBox="0 0 512 512">
+							<style>
+								svg {
+									fill: #ffffff
+								}</style>
+							<path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+						</svg> <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;">Favorites</b>
+					</a>
+				</li>
+				<li class="shape-circle circle-three">
+					<a asp-controller="Car" asp-action="AddCar" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+						<svg xmlns="http://www.w3.org/2000/svg" style="margin-left:-60px;margin-right:12px;" height="50px" width="50px" viewBox="0 0 448 512">
+							<style>
+								svg {
+									fill: #ffffff
+								}</style>
+							<path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+						</svg> <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;">Add Car</b>
+					</a>
+				</li>
+				<li class="shape-circle circle-three">
+					<a asp-controller="Car" asp-action="About" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+						<svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16"> <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" fill="white"></path> </svg> <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;">About</b>
+					</a>
+				</li>
+				<li class="shape-circle circle-five">
+					<a asp-controller="Car" asp-action="Cars" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:30px;">
+						<svg xmlns="http://www.w3.org/2000/svg" style="margin-left:-20px;margin-right:15px;" height="40px" width="40px" viewBox="0 0 512 512">
+							<style>
+								svg {
+									fill: #ffffff
+								}</style>
+							<path d="M135.2 117.4L109.1 192H402.9l-26.1-74.6C372.3 104.6 360.2 96 346.6 96H165.4c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32H346.6c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2V400v48c0 17.7-14.3 32-32 32H448c-17.7 0-32-14.3-32-32V400H96v48c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V400 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
+						</svg> <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-family: 'Cabin', sans-serif;">Cars</b>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<!--Main Body Content-->
+
+
+
+
+
+
+
+
+
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+
+	</div>
+
+
+	@*<footer class="border-top footer text-muted">
+	<div class="container">
+	&copy; 2023 - WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	</div>
+	</footer>*@
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+	@*<footer class="border-top footer text-muted">
+	<div class="container">
+	&copy; 2023 - WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	</div>
+	</footer>*@
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+
+		$(document).on('click', '.profilecss .image-container a', function () {
+			// Handle the click event here
+			window.location.href = $(this).attr('href');
+		});
+
+		$.ajax({
+			url: '@Url.Action("GetUser", "Account")',
+			type: 'GET',
+			success: function (response) {
+				console.log("Worked");
+				console.log(response);
+
+				// Set the currentUser variable to the response.phoneNumber
+				var currentUser = response;
+
+				// Get the profilecss div element
+				var profileDiv = $(".profilecss");
+
+				if (currentUser != null) {
+					// If currentUser is not empty (user is logged in), update the content
+					profileDiv.html(`
+										<div class="image-container">
+											<a href="@Url.Action("Login", "Account")">
+												<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="26.5px" viewBox="0 0 448 512">
+													<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" fill="#FFA500" />
+												</svg>
+											</a>
+											<a href="@Url.Action("LogOut", "Account")" style="color:white;color:inherit;z-index:100;width:65px;" class="logout-link"><b style="color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:17px;">Log Out</b></a>
+										</div>
+									`);
+				} else {
+					// If currentUser is empty (user is not logged in), update the content
+					profileDiv.html(`
+										<a href="@Url.Action("Login", "Account")">
+											<svg xmlns="http://www.w3.org/2000/svg" width="26.5px" height="26.5px" viewBox="0 0 448 512">
+												<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+											</svg>
+										</a>
+									`);
+				}
+			},
+			error: function (xhr, status, error) {
+				console.error(error);
+				alert(error);
+			}
+		});
+
+	</script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,1121 @@
+﻿@using App.Entities.Models;
+@{
+	Layout = null;
+	var user = ViewBag.CurrentUser as User;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - WebUI</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/WebUI.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Profile.css" />
+	<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Card.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/FavoriteC.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/js/Favorite.js" asp-append-version="true" />
+
+	<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+	<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+
+	<style>
+		.selected-button {
+			background-color: #526D82; /* Use your desired background color */
+			padding: 6px 30px;
+			border-radius: 5px;
+			color: #000; /* Use your desired text color */
+			/* Add more styles as needed */
+		}
+
+
+		.empty_state i {
+			margin: auto;
+			margin-bottom: 0px;
+			font-size: 90px;
+			color: #ccc;
+		}
+
+		.empty_state h3 {
+			margin: 8px 0px;
+			text-align: center;
+			font-weight: normal;
+		}
+
+		.empty_state p {
+			font-size: 14px;
+			margin: 0px;
+			color: #999;
+			text-align: center;
+		}
+
+        .empty_state button {
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 8px;
+            margin: 20px auto auto auto;
+            width: 50%;
+            max-width: 200px;
+            background: #348AC7;
+            color: white;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        /* Mini alert container */
+        .mini-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #C70039; /* Blue background color */
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 9999;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+		a{
+			cursor:pointer;
+		}
+
+		/* Close (x) icon */
+		.close-icon {
+			cursor: pointer;
+			float: right;
+			font-size: 30px;
+			font-weight: bold;
+			margin-left: 10px; /* Add space between content and close button */
+		}
+
+		/* Alert content */
+		.alert-content {
+			margin-bottom: 10px; /* Add margin for space */
+		}
+
+		/* Show animation */
+		.show {
+			animation: fadeIn 0.5s ease-in-out;
+		}
+
+		/* Fade in animation */
+		@@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+
+
+
+    </style>
+    <div class="mini-alert" id="miniAlert">
+        <span class="close-icon" onclick="hideNotification('minialert')">&times;</span>
+        <div class="alert-content">
+            Car Deleted Successfully From Your Account!
+        </div>
+    </div>
+
+
+	<div style="background-color:#7AA874;" class="mini-alert" id="AddToPost">
+		<span class="close-icon" onclick="hideNotification('AddToPost')">&times;</span>
+		<div class="alert-content">
+			Added Car To You Account Successfully!
+		</div>
+	</div>
+
+	<div class="mini-alert" id="vipRemove">
+		<span class="close-icon" onclick="hideNotification('vipRemove')">&times;</span>
+		<div class="alert-content">
+			Deleted From VIP Posts Successfully!
+		</div>
+	</div>
+
+
+    <div style="background-color:#7AA874;" class="mini-alert" id="vipAdd">
+        <span class="close-icon" onclick="hideNotification('vipAdd')">&times;</span>
+        <div class="alert-content">
+            Added To VIP Posts Successfully!
+        </div>
+    </div>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" width="40" height="40" alt="">
+        <span style="margin-left:10px;" class="d-none d-md-inline">@ViewBag.PhoneNumber</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div style="text-align:right;margin:auto;" class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+					<a id="currentCarsBtn" class="nav-link">Your Cars</a>
+            </li>
+            <li class="nav-item">
+					<a id="yourProfileBtn" class="nav-link">Your Account</a>
+            </li>
+            <li class="nav-item">
+					<a id="expiredCarsBtn" class="nav-link">Expired Cars</a>
+            </li>
+            <li class="nav-item">
+					<a id="notifyBtn" class="nav-link">Notify About Car</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Account" asp-action="LogOut">Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+@*    <div class="sidebar">
+        <div class="user-wrapper">
+            <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" width="40px" height="40px" alt="" />
+            <h4 style="margin-top:5px;">@ViewBag.PhoneNumber</h4>
+        </div>
+        <br />
+        <div class="sidebar-menu">
+            <ul>
+                <li id="currentCarsBtn">
+                    <button class="profilebtn"><a>Your Current Cars</a></button>
+                </li>
+                <li id="yourProfileBtn">
+                    <button class="profilebtn"><a>Your Profile</a></button>
+                </li>
+                <li id="expiredCarsBtn">
+                    <button class="profilebtn"><a>Expired Cars</a></button>
+                </li>
+                <li id="logOutBtn">
+                    <a asp-controller="Account" asp-action="LogOut" style="cursor:pointer;" class="profilebtn">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>*@
+    <div class="main-content">
+        <br />
+        <main id="dynamicContent">
+        </main>
+    </div>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- Include Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+	<script>
+
+
+        //function GetPosts(posts){
+        //      console.log(posts);
+        //  }
+
+		/// <summary> Bu funksiya eger tek bir notification olarsa ici yazilmalidi </summary>
+		function hideNotification() {
+
+		}
+		/// <summary> Bu funksiya icerisine notification id gelir ve hemin notificationu baglayir </summary>
+		function hideNotification(notificationId) {
+			//document.getElementById("miniAlert").style.display = "block";
+			document.getElementById(notificationId).style.display = "none";
+		}
+
+        var allPosts = [];
+		var notificationGlobalForRuntime = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Notification));
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get references to the button and dynamic content div
+            var currentCarsBtn = document.getElementById("currentCarsBtn");
+            var notifyBtn = document.getElementById("notifyBtn");
+            notifyBtn.addEventListener('click', function () {
+                let username = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(user));
+                let notification = notificationGlobalForRuntime;
+				console.log("Notification: ")
+				console.log(notification)
+				console.log("username: ")
+				console.log(username)
+                let enableDisable = "Enable";
+                let disableVar = false;
+
+                let content = "";
+                if (username != null) {
+
+                    if (notification != null) {
+                        enableDisable = "Disable";
+                        disableVar = true;
+                    }
+
+                    content = `
+                    <section id="loginsec" class="container">
+                            <div class="login-container">
+                                <div class="circle circle-one"></div>
+                                <div class="form-container">
+                                    <img style="display:none;" onclick="UpdateNotification()" id="saveForNotification" src="../css/floppy-disk.png" alt="Image" class="top-right-image" />
+                                    <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:15px;" class="opacity"><b>We will send you a Notification When Your Selected Brand & Model will be Added!</b></h1>
+                                    <div style="text-align:center;margin:auto;">
+                                        <div class="sec-center" style="z-index:5;margin-top:20px;">
+                                            <select onclick="Func()" id="brandSelect" style="background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example" onchange="SetEnableDisableFunc()">
+                                                <option value="Select Brand" selected>Select Brand</option>
+                                                <!-- Brands will be populated dynamically using JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;margin:auto;">
+                                        <div class="sec-center" style="z-index:5;margin-top:20px;">
+                                            <select disabled id="modelSelect" style="opacity:0.5;background:#1E3050;color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="form-select" aria-label="Default select example">
+                                                <option selected>Select Model</option>
+                                                <!-- Models will be populated dynamically using JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                                    <input id="notificationButton" value="${enableDisable}" type="button" onclick="toggleNotificationButton()" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; padding: 10px 20px; width:70%; border: none; font-size: 13px; color: #fff; border-radius: 7px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; transition: 0.5s; transition-property: box-shadow; background: rgb(0,140,255); box-shadow: 0 0 25px rgb(0,140,255); box-shadow: 0 0 5px rgb(0,140,255), 0 0 25px rgb(0,140,255), 0 0 50px rgb(0,140,255), 0 0 100px rgb(0,140,255);" class="opacity" />
+                                </div>
+                                <div class="circle circle-two"></div>
+                            </div>
+                        </section>
+
+                                                                                                                                        `;
+
+                }
+                //<input id="input_username" value = "${username.Fullname}" />
+                //    <button id="changeButtonId" > Change < /button>
+                //        < p id = "informationLabel" > </p>
+                else {
+                    content = `
+                                                                                                                            <div class="empty_state">
+                                                                                                                        <i class="ion-sad-outline" ></i>
+                                                                                                                            <h3 class=""> No User Was Found </h3>
+                                                                                                                                <p> There have been no USERS in this section yet </p>
+                                                                                                                                        </div>
+                                                                                                            `
+                }
+                dynamicContentDiv.innerHTML = content;
+
+                if (notification != null) {
+					console.log("Notification")
+					console.log(notification)
+                    const modelSelect = document.getElementById("modelSelect");
+                    modelSelect.innerHTML = '';
+                    var option1 = document.createElement("option");
+                    option1.text = notification.Model;
+                    modelSelect.add(option1);
+                    modelSelect.disabled = false;
+                    modelSelect.style.opacity = "1";
+                    const brandSelect = document.getElementById("brandSelect");
+                    brandSelect.innerHTML = '';
+                    var option2 = document.createElement("option");
+                    option2.text = notification.Vendor;
+                    brandSelect.add(option2);
+                    console.log(notification)
+                    console.log(modelSelect.value)
+                    console.log(brandSelect.value)
+                }
+                yourProfileBtn.classList.remove("selected-button"); // Add the selected style
+                currentCarsBtn.classList.remove("selected-button"); // Remove the style from other button
+                expiredCarsBtn.classList.remove("selected-button");
+                notifyBtn.classList.add("selected-button"); // Remove the style from other button
+                // Remove the style from other button
+
+
+            });
+            var dynamicContentDiv = document.getElementById("dynamicContent");
+            var contentCache = null;
+            var posts = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Posts));
+            allPosts = posts;
+            let expiredCarsBtn = document.getElementById("expiredCarsBtn");
+            expiredCarsBtn.addEventListener('click', function () {
+                console.log("Expired Current Cars Is Worked")
+                console.log("posts")
+                console.log(posts)
+                console.log("All Posts")
+                console.log(allPosts)
+                console.log("-=-=-=-==-=-==-=-=-=-=-=-=-=-=-=-]-=-=-=-=-=-")
+                dynamicContentDiv.innerHTML = "";
+                contentCache = null;
+                var content = "";
+                if (posts.length > 0) {
+                    console.log(posts.length);
+                    for (let i = 0; i < posts.length; i++) {
+
+						if (contentCache) {
+							dynamicContentDiv.innerHTML = contentCache;
+						}
+						else {
+							if (posts[i].IsDeleted) {
+
+								//
+
+
+								//Bu Hissedeki Kod Tekrarlanib Bu bir funskiyaya cixardilmalidir
+
+
+								//
+								var engine = posts[i].Car.Engine.EngineCapacity / 1000;
+								//if (posts[i].Car.Images.Count > 0) {
+								//    link = posts[i].Car.Images[0].Link;
+								//}
+								var creditImage = "../css/Empty.png";
+								var barterImage = "../css/Empty.png";
+
+								if (posts[i].Car.Finance.IsBarter == true && posts[i].Car.Finance.IsCredit == false) {
+									barterImage = "../css/exchange.png";
+									creditImage = "../css/Empty.png";
+								} else if (posts[i].Car.Finance.IsCredit == true && posts[i].Car.Finance.IsBarter == false) {
+									creditImage = "../css/percentage.png";
+									barterImage = "../css/percentage.png";
+									creditImage = "../css/Empty.png";
+								} else if (posts[i].Car.Finance.IsCredit == true && posts[i].Car.Finance.IsBarter == true) {
+									creditImage = "../css/percentage.png";
+									barterImage = "../css/exchange.png";
+								} else {
+									creditImage = "../css/Empty.png";
+
+								}
+
+								content += `
+
+
+																	<div id="${posts[i].Car.Id}" class="carcontainer" style="display:inline-block;align-items:center;justify-content:center;">
+
+																<div style="border: 5px solid #1E3050;" class="car-card">
+																		<a  style="text-decoration: none;color:inherit;">
+																						<div class="car-tumb" style="position: relative;">
+																				<!-- Icon Container -->
+																				<div style="position: absolute; top: 5px; right: 5px;">
+																					<img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+																				</div>
+																				<div style="position: absolute; top: 5px; right: 33px;">
+																						<img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+																				</div>
+																				<img src="${posts[i].Car.Images[0].Link}" alt="">
+																			</div>
+																		<div class="car-details">
+																														<h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${posts[i].Car.Main.Vendor} ${posts[i].Car.Main.Model}</h4>
+																														<p>${posts[i].Car.Main.Year}, ${engine}, ${posts[i].Car.Main.Kilometer} km</p>
+																														<p>${posts[i].Car.City}, ${posts[i].Date}</p>
+																														<hr />
+																																<div class="car-price">${posts[i].Car.Finance.Price} AZN</div>
+																													</div>
+																		</a>
+																		<div>
+																			<div>
+																				<img onclick="ReSharePost(${posts[i].Id})" class="favorite-button" src="../css/correct.png" />
+																			</div>
+																		</div>
+																	</div>
+
+																	</div>
+
+																																`;
+
+								dynamicContentDiv.innerHTML = content;
+							}
+						}
+					}
+					if (content === "") {
+						content = `
+																							<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+															<div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+																<img style="width: 100px; height: 100px;" src="../css/curcars.png" />
+																<h3 style="margin: 10px 0;">You don't have <b style="color:red;">EXPIRED</b> Cars Yet</h3>
+																<p>There have been no posts in this section yet</p>
+															</div>
+														</div>
+																					`
+					}
+				}
+				else {
+					content = `
+																					   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+																	<div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+																		<img style="width: 100px; height: 100px;" src="../css/curcars.png" />
+																		<h3 style="margin: 10px 0;">You don't have <b style="color:red;">EXPIRED</b> Cars Yet</h3>
+																		<p>There have been no posts in this section yet</p>
+																	</div>
+																</div>
+																	`
+
+				}
+				contentCache = content;
+				dynamicContentDiv.innerHTML = content;
+
+				notifyBtn.classList.remove("selected-button"); // Remove the style from other button
+
+
+			});
+
+
+
+
+
+			var yourProfileBtn = document.getElementById("yourProfileBtn");
+			function generateCurrentCarsContent() {
+				console.log("Generate Current Cars Is Worked")
+				console.log(posts)
+				dynamicContentDiv.innerHTML = "";
+				contentCache = null;
+				var content = "";
+				if (contentCache) {
+					dynamicContentDiv.innerHTML = contentCache;
+				}
+				else {
+					console.log(posts);
+					if (posts != null && posts.Count != 0) {
+
+
+
+
+						for (let i = 0; i < posts.length; i++) {
+							//
+
+
+							//Bu Hissedeki Kod Tekrarlanib Bu bir funskiyaya cixardilmalidir
+
+
+							//
+							if (!posts[i].IsDeleted) {
+								var engine = posts[i].Car.Engine.EngineCapacity / 1000;
+								//if (posts[i].Car.Images.Count > 0) {
+								//    link = posts[i].Car.Images[0].Link;
+								//}
+								var creditImage = "../css/Empty.png";
+								var barterImage = "../css/Empty.png";
+
+								if (posts[i].Car.Finance.IsBarter == true && posts[i].Car.Finance.IsCredit == false) {
+									barterImage = "../css/exchange.png";
+									creditImage = "../css/Empty.png";
+								} else if (posts[i].Car.Finance.IsCredit == true && posts[i].Car.Finance.IsBarter == false) {
+									creditImage = "../css/percentage.png";
+									barterImage = "../css/percentage.png";
+									creditImage = "../css/Empty.png";
+								} else if (posts[i].Car.Finance.IsCredit == true && posts[i].Car.Finance.IsBarter == true) {
+									creditImage = "../css/percentage.png";
+									barterImage = "../css/exchange.png";
+								} else {
+									creditImage = "../css/Empty.png";
+
+								}
+
+								let vipImg = '';
+								//POST ISVIP IMAGE CODES
+								// :
+								if (posts[i].IsVip == true) {
+									vipImg = '../css/greencrown.png';
+								}
+								else {
+									vipImg = '../css/crown.png';
+								}
+
+								content += `
+
+
+																																			<div id="${posts[i].Car.Id}" class="carcontainer" style="display:inline-block;align-items:center;justify-content:center;">
+
+																													  <div style="border: 5px solid #1E3050;" class="car-card">
+																																				<a href="/Car/SelectedCar?carId=${posts[i].Car.Id}&edit=1" style="text-decoration: none;color:inherit;">
+																																	<div class="car-tumb" style="position: relative;">
+											<!-- Icon Container -->
+											<div style="position: absolute; top: 5px; right: 5px;">
+												<img src="${barterImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+											</div>
+											<div style="position: absolute; top: 5px; right: 33px;">
+													<img src="${creditImage}" alt="Your Icon" style="width: 23px; height: 23px;">
+											</div>
+											<img src="${posts[i].Car.Images[0].Link}" alt="">
+										</div>
+																																<div class="car-details">
+																																														<h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight:bolder;text-align:center;">${posts[i].Car.Main.Vendor} ${posts[i].Car.Main.Model}</h4>
+
+																																												<p>${posts[i].Car.Main.Year}, ${engine}, ${posts[i].Car.Main.Kilometer} km</p>
+																																												<p>${posts[i].Car.City}, ${posts[i].Date}</p>
+																																												<hr />
+																																														<div style="font-size:21px;margin-bottom:5px;" class="car-price">${posts[i].Car.Finance.Price} AZN</div>
+
+                                                                                                                                                                    </div>
+                                                                                                                        </a>
+                                                                                                                        <div >
+                                                                                                                            <div>
+                                                                                                                                          <div>
+                                                                                                                                                                       <img onclick="VipPosts(this, '${posts[i].Car.Id}')" id="vipbtn" style="margin-right:45px;" class="favorite-button" src="${vipImg}" />
+
+																																																						</div>
+																																																												<img onclick="DeleteCar(${posts[i].Car.Id})" id="deletecarbtn" style="margin-left: 40px;" class="favorite-button" src="../css/x-button.png" />
+																																					</div>
+
+																																				</div>
+																																			</div>
+
+																															</div>
+
+																																`;
+
+
+
+							}
+
+							dynamicContentDiv.innerHTML = content;
+						}
+						if (content === "") {
+							content = `
+																													<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+															<div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+																<img style="width: 100px; height: 100px;" src="../css/curcars.png" />
+																				<h3 style="margin: 10px 0;">You don't have <b style="color:springgreen;">CURRENT</b> Cars Yet</h3>
+																<p>There have been no posts in this section yet</p>
+															</div>
+														</div>
+																			`
+						}
+
+					}
+					else {
+						content = `
+
+															  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+													<div style="background-color: #1E3050; padding: 20px; text-align: center; border-radius: 10px;">
+														<img style="width: 100px; height: 100px;" src="../css/curcars.png" />
+																<h3 style="margin: 10px 0;">You don't have <b style="color:springgreen;">CURRENT</b> Cars Yet</h3>
+														<p>There have been no posts in this section yet</p>
+													</div>
+												</div>
+																					`
+					}
+
+					contentCache = content;
+					dynamicContentDiv.innerHTML = content;
+				}
+			}
+
+
+
+			currentCarsBtn.addEventListener("click", function () {
+				generateCurrentCarsContent();
+				currentCarsBtn.classList.add("selected-button"); // Add the selected style
+				yourProfileBtn.classList.remove("selected-button"); // Remove the style from other button
+				expiredCarsBtn.classList.remove("selected-button"); 
+				notifyBtn.classList.remove("selected-button"); // Remove the style from other button
+				// Remove the style from other button
+
+			});
+
+			expiredCarsBtn.addEventListener("click", function () {
+				currentCarsBtn.classList.remove("selected-button"); // Add the selected style
+				yourProfileBtn.classList.remove("selected-button"); // Remove the style from other button
+				expiredCarsBtn.classList.add("selected-button"); // Remove the style from other button
+				notifyBtn.classList.remove("selected-button"); // Remove the style from other button
+
+			});
+
+			function ChangeUsername() {
+				let infoLabel = document.getElementById("informationLabel");
+				let username = document.getElementById("input_username").value;
+				console.log("Info label")
+				console.log(infoLabel)
+				console.log("username")
+				console.log(username)
+				$.ajax({
+					url: '@Url.Action("ChangeUserName", "Account")',
+					type: 'POST',
+					data: { newName: username },
+					success: function (response) {
+						// Handle the successful response from the server
+						console.log(response);
+						alert("Your Name Succesfully Changed");
+						infoLabel.innerHTML = "Your Name Succesfully Changed"
+						infoLabel.style = "color:green";
+					},
+					error: function (xhr, status, error) {
+						// Handle any errors that occurred during the AJAX request
+						console.error(error);
+						infoLabel.innerHTML = "An error occurred while changing your username.Please try again later."
+						infoLabel.style = "color:red";
+					}
+				});
+			}
+			yourProfileBtn.addEventListener("click", function () {
+				let username = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(user))
+					let content = "";
+				if (username != null) {
+
+					content = `
+																																<section id="loginsec" class="container">
+																										<div class="login-container">
+																											<div class="circle circle-one"></div>
+																											<div class="form-container">
+																												<img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png" alt="illustration" class="illustration" />
+																												<h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:25px;" class="opacity"><b>You Can Change Or Enter your Name</b></h1>
+																															<input id="input_username" value = "${username.Fullname}" " style="color:white;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   display: block;
+																									padding: 14.5px;
+																									width: 100%;
+																									margin: 2rem 0;
+																									color: var(--color);
+																									outline: none;
+																									background-color: #9191911f;
+																									border: none;
+																									border-radius: 5px;
+																									font-weight: 500;
+																									letter-spacing: 0.8px;
+																									font-size: 15px;
+																									-webkit-border-radius: 5px;
+																									-moz-border-radius: 5px;
+																									-ms-border-radius: 5px;
+																									-o-border-radius: 5px;" type="tel" placeholder="Your Name" />
+																															<input id="changeButtonId" value="Change" type="button" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; padding: 10px 20px;
+																								  border: none;
+																								  font-size: 17px;
+																								  color: #fff;
+																								  border-radius: 7px;
+																								  letter-spacing: 4px;
+																								  font-weight: 700;
+																								  text-transform: uppercase;
+																								  transition: 0.5s;
+																										  transition-property: box-shadow; background: rgb(0,140,255);
+																										  box-shadow: 0 0 25px rgb(0,140,255); box-shadow: 0 0 5px rgb(0,140,255),
+																											  0 0 25px rgb(0,140,255),
+																											  0 0 50px rgb(0,140,255),
+																											  0 0 100px rgb(0,140,255);" class="opacity" />
+																											</div>
+																											<div class="circle circle-two"></div>
+																										</div>
+																									</section>
+
+																												`;
+
+				}
+				//<input id="input_username" value = "${username.Fullname}" />
+				//    <button id="changeButtonId" > Change < /button>
+				//        < p id = "informationLabel" > </p>
+				else {
+					content = `
+																									<div class="empty_state">
+																								<i class="ion-sad-outline" ></i>
+																									<h3 class=""> No User Was Found </h3>
+																										<p> There have been no USERS in this section yet </p>
+																												</div>
+																					`
+				}
+				dynamicContentDiv.innerHTML = content;
+				
+				yourProfileBtn.classList.add("selected-button"); // Add the selected style
+				currentCarsBtn.classList.remove("selected-button"); // Remove the style from other button
+				expiredCarsBtn.classList.remove("selected-button"); // Remove the style from other button
+				notifyBtn.classList.remove("selected-button"); // Remove the style from other button
+
+
+				let changeButton = document.getElementById("changeButtonId");
+
+				changeButton.addEventListener("click", ChangeUsername);
+			});
+
+
+			currentCarsBtn.classList.add("selected-button");
+			// Call the function initially
+			generateCurrentCarsContent();
+			// Add a listener for the popstate event
+			//window.addEventListener("popstate", function (event) {
+			//    if (event.state && event.state.page === "currentCars") {
+			//        generateCurrentCarsContent(); // Re-generate content on back navigation
+			//    }
+			//});
+
+		});
+
+
+
+		function closeMiniAlert() {
+			location.reload()
+		}
+
+
+        function DeleteCar(carId) {
+            $.ajax({
+                url: '@Url.Action("DeleteCar", "Car")',
+                type: 'POST',
+                data: { carId: carId },
+                success: function (response) {
+                    // car deleted successfully
+                    console.log(response);
+                    posts = response;
+                    console.log(posts);
+                    //--------------------------------------------------------------------------------------------------------
+                    document.getElementById("miniAlert").style.display = "block";
+                    document.getElementById(`${carId}`).remove();
+                    allPosts.forEach((p) => {
+                        if(carId == p.Car.Id){
+                            p.IsDeleted = true;
+                        }
+                    })
+                    // Set an interval to refresh the page every 5 seconds (5000 milliseconds)
+                    const refreshInterval = setInterval(function () {
+                        hideNotification("miniAlert");
+                    }, 3000);
+                },
+                error: function (xhr, status, error) {
+                    // Handle AJAX error
+                    console.error(error);
+                    alert(error);
+                }
+            });
+        }
+
+
+        let brandSelected = false;
+        let selectionCount = 0;
+        var notificationID = 0;
+
+        var notificationJson = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Notification));
+        console.log(notificationJson)
+        if (notificationJson != null) {
+            brandSelected = true;
+            notificationID = notificationJson.Id;
+
+        }
+
+
+        function SetEnableDisableFunc() {
+            const brandSelect = document.getElementById("brandSelect");
+            const modelSelect = document.getElementById("modelSelect");
+            const notificationButton = document.getElementById("notificationButton");
+            const saveForNotification = document.getElementById("saveForNotification");
+
+            if (brandSelect.value !== "Select Brand") {
+                brandSelected = true;
+                selectionCount++;
+                modelSelect.disabled = false;
+                modelSelect.style.opacity = "1";
+                notificationButton.disabled = false;
+                notificationButton.style.opacity = "1";
+                // Store selectedBrand and selectedModel in sessionStorage
+                sessionStorage.setItem("selectedBrand", brandSelect.value);
+                sessionStorage.setItem("selectedModel", modelSelect.value);
+
+                if (selectionCount >= 1 && notificationButton.value === "Disable Notification") {
+                    saveForNotification.style.display = "block";
+                }
+            }
+
+        }
+
+
+
+        function populateModelDropdown(selectedBrand) {
+            const brandModelsData = @Html.Raw(ViewBag.BrandModels);
+            const modelSelect = document.getElementById("modelSelect");
+            modelSelect.innerHTML = "<option>Select Model</option>";
+            if (selectedBrand in brandModelsData) {
+                for (const model of brandModelsData[selectedBrand]) {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    option.text = model;
+                    modelSelect.appendChild(option);
+                }
+                modelSelect.disabled = false;
+                modelSelect.style.opacity = "1";
+            } else {
+                const option = document.createElement("option");
+                option.text = "No models available";
+                modelSelect.appendChild(option);
+            }
+        }
+        function Func() {
+            const brandSelect = document.getElementById("brandSelect");
+            const brandModelsData = @Html.Raw(ViewBag.BrandModels);
+            const modelSelect = document.getElementById("modelSelect");
+
+            console.log(brandModelsData);
+
+            for (const brand in brandModelsData) {
+                const option = document.createElement("option");
+                option.value = brand;
+                option.text = brand;
+                brandSelect.appendChild(option);
+            }
+
+            brandSelect.addEventListener("change", function () {
+                const selectedBrand = brandSelect.value;
+                populateModelDropdown(selectedBrand);
+            });
+
+            populateModelDropdown(brandSelect.value);
+        }
+
+        document.addEventListener("DOMContentLoaded", Func);
+
+
+
+        function UpdateNotification() {
+            const brandSelect = document.getElementById("brandSelect");
+            const modelSelect = document.getElementById("modelSelect");
+            $.ajax({
+                url: '@Url.Action("UpdateNotification", "Car")',
+                type: 'POST',
+                data: { vendor: brandSelect.value, model: modelSelect.value, id: notificationID },
+                success: function (response) {
+                    document.getElementById("savednoti").style.display = "block";
+                    const refreshInterval = setInterval(function () {
+                        hideNotification("savednoti");
+                    }, 3000);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert(error)
+                }
+            });
+        }
+
+
+        function toggleNotificationButton() {
+            console.log("Worked Toogle Notification")
+            const brandSelect = document.getElementById("brandSelect");
+            const modelSelect = document.getElementById("modelSelect");
+            let notification = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Notification));
+            const notificationButton = document.getElementById("notificationButton");
+            console.log(brandSelected);
+            if (brandSelected) {
+                if (notificationButton.value === "Enable") {
+                    const brandSelect = document.getElementById("brandSelect");
+                    const modelSelect = document.getElementById("modelSelect");
+                    console.log("Worked Enable Notification")
+                    $.ajax({
+                        url: '@Url.Action("AddNotification", "Car")',
+                        type: 'POST',
+                        data: { vendor: brandSelect.value, model: modelSelect.value },
+                        success: function (response) {
+							console.log("responseden gelen response:")
+                            console.log(response)
+							console.log("-----------------------------------------------------------")
+                            notificationID = response.id;
+							let responseTemp = {
+								Id: response.id,
+								Model:response.model,
+								User:response.user,
+								UserId:response.userId,
+								Vendor:response.vendor
+							};
+							notificationGlobalForRuntime = responseTemp;
+							console.log(notificationGlobalForRuntime)
+                            
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            alert(error)
+                        }
+                    });
+
+                    notificationButton.value = "Disable";
+                    notificationButton.style.opacity = "1";
+                } else {
+                    const brandSelect = document.getElementById("brandSelect");
+                    const modelSelect = document.getElementById("modelSelect");
+                    console.log("Worked Disable Notification")
+                    console.log(notificationID)
+                    if (notificationID != null) {
+						console.log("it worked")
+                        $.ajax({
+                            url: '@Url.Action("DeleteNotification", "Car")',
+                            type: 'POST',
+                            data: { id: notificationID },
+                            success: function (response) {
+								console.log("Disabled Worked: ")
+								console.log(notificationGlobalForRuntime)
+								notificationGlobalForRuntime = null;
+								console.log("Notification Null:")
+								console.log(notificationGlobalForRuntime)
+                                
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                                alert(error)
+                            }
+                        });
+
+
+                        notificationButton.value = "Enable";
+                        brandSelect.value = "Select Brand";
+                        modelSelect.value = "Select Model";
+                        modelSelect.style.opacity = "0.5";
+                        notificationButton.disabled = true;
+                        notificationButton.style.opacity = "0.5";
+                        saveForNotification.style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+
+
+		function ReSharePost(id) {
+			$.ajax({
+				url: '@Url.Action("ReSharePost", "Car")',
+				type: 'POST',
+				data: { id: id },
+				success: function (response) {
+					//--------------------------------------------------------------------------------------------------------
+					document.getElementById("AddToPost").style.display = "block";
+					document.getElementById(`${id}`).remove();
+					allPosts.forEach((p) => {
+						if (id == p.Car.Id) {
+							p.IsDeleted = false;
+						}
+					})
+					console.log("Changed Version Of Posts")
+					console.log(allPosts)
+					// Set an interval to refresh the page every 5 seconds (5000 milliseconds)
+					const refreshInterval = setInterval(function () {
+						hideNotification("AddToPost");
+					}, 3000);
+				},
+				error: function (xhr, status, error) {
+					// Handle AJAX error
+					console.error(error);
+					alert(error);
+				}
+			});
+		}
+
+
+		var globalPostId = 0;
+		function VipPosts(imgElement, id) {
+			//'../css/greencrown.png'
+			//'../css/crown.png'
+			if (imgElement.src.includes('css/crown.png')) {
+				imgElement.src = '../css/greencrown.png';
+				$.ajax({
+					url: '@Url.Action("MakePostVip", "Car")',
+					type: 'POST',
+					data: { id: id },
+					success: function (response) {
+						//--------------------------------------------------------------------------------------------------------
+
+
+						globalPostId = id;
+						if (response.redirectUrl) {
+							// Handle the redirection manually
+							window.location.href = response.redirectUrl;
+						}
+						else {
+							// Handle other responses
+							console.log(response);
+							imgElement.onclick = function () {
+								VipPosts(this, globalPostId);
+							};
+							document.getElementById("vipAdd").style.display = "block";
+							document.getElementById("vipRemove").style.display = "none";
+
+						}
+
+					},
+					error: function (xhr, status, error) {
+						// Handle AJAX error
+						console.error(error);
+						alert(error);
+					}
+				});
+			}
+			else {
+				console.log("Remove Worked")
+				console.log(imgElement.src)
+				imgElement.src = '../css/crown.png';
+				$.ajax({
+					url: '@Url.Action("DeleteFromVip", "Car")',
+					type: 'POST',
+					data: { id: id },
+					success: function (response) {
+						//--------------------------------------------------------------------------------------------------------
+
+						imgElement.onclick = function () {
+							VipPosts(this, globalPostId);
+						};
+						document.getElementById("vipAdd").style.display = "none";
+						document.getElementById("vipRemove").style.display = "block";
+
+					},
+					error: function (xhr, status, error) {
+						// Handle AJAX error
+						console.error(error);
+						alert(error);
+					}
+				});
+			}
+		}
+
+
+												//function Favorite(imgElement, postId) {
+												//@*FavoriteImageChange(imgElement);*@
+
+												//                                            if (imgElement.src.includes('whte.png')) {
+												//        // If the image is currently the white heart, change it to the red heart
+												//        imgElement.src = 'css/red.png';
+												//        $.ajax({
+												//            url: '@Url.Action("Favorite", "Car")',
+												//            type: 'POST',
+												//            data: { param: postId },
+												//            success: function (response) {
+												//                if (response.redirectUrl) {
+												//                    // Handle the redirection manually
+												//                    window.location.href = response.redirectUrl;
+												//                } else {
+												//                    // Handle other responses
+												//                    console.log(response);
+												//                    imgElement.onclick = function () {
+												//                        Favorite(this, response.id);
+												//                    };
+												//                }
+												//            },
+												//            error: function (xhr, status, error) {
+												//                // Handle any errors that occurred during the AJAX request
+												//                console.error(error);
+												//                alert(error)
+												//            }
+												//        }); 4
+
+
+												//    } else {
+												//        // If the image is currently the red heart, change it to the white heart
+												//        imgElement.src = 'css/whte.png';
+												//        $.ajax({
+												//            url: '@Url.Action("FavoriteDelete", "Car")',
+												//            type: 'POST',
+												//            data: { param: postId },
+												//            success: function (response) {
+												//                // Handle the successful response from the server
+												//                console.log(response);
+												//                imgElement.onclick = function () {
+												//                    Favorite(this, response.postId);
+												//                };
+												//            },
+												//            error: function (xhr, status, error) {
+												//                // Handle any errors that occurred during the AJAX request
+												//                console.error(error);
+												//                alert(error)
+												//            }
+												//        });
+												//    }
+
+
+												//}
+
+
+	</script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

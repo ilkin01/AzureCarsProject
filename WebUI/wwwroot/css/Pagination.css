@@ -1,0 +1,28 @@
+﻿
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 20px;
+    font-size:20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #526D82;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    button:hover {
+        background-color: #2980b9;
+    }
